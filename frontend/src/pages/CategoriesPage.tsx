@@ -190,20 +190,37 @@ export default function CategoriesPage() {
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="border-b border-gray-50">
-                    <td className="py-4 px-5"><div className="skeleton w-6 h-4" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-32 h-4" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-48 h-4" /></td>
-                    <td className="py-4 px-5 text-center"><div className="skeleton w-10 h-5 mx-auto rounded-full" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-16 h-4 mx-auto" /></td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-6 h-4" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-32 h-4" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-48 h-4" />
+                    </td>
+                    <td className="py-4 px-5 text-center">
+                      <div className="skeleton w-10 h-5 mx-auto rounded-full" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-16 h-4 mx-auto" />
+                    </td>
                   </tr>
                 ))
               ) : categories.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="text-center py-16">
                     <div className="text-gray-300">
-                      <FolderTree size={48} className="mx-auto mb-3 text-gray-200" />
-                      <p className="font-medium text-gray-400">Tidak ada data</p>
-                      <p className="text-xs text-gray-300 mt-1">Tambahkan category pertama</p>
+                      <FolderTree
+                        size={48}
+                        className="mx-auto mb-3 text-gray-200"
+                      />
+                      <p className="font-medium text-gray-400">
+                        Tidak ada data
+                      </p>
+                      <p className="text-xs text-gray-300 mt-1">
+                        Tambahkan category pertama
+                      </p>
                     </div>
                   </td>
                 </tr>
@@ -217,10 +234,14 @@ export default function CategoriesPage() {
                       {(page - 1) * 10 + idx + 1}
                     </td>
                     <td className="py-4 px-5">
-                      <span className="font-semibold text-gray-800">{cat.name}</span>
+                      <span className="font-semibold text-gray-800">
+                        {cat.name}
+                      </span>
                     </td>
                     <td className="py-4 px-5 text-gray-400 truncate max-w-xs">
-                      {cat.description || <span className="text-gray-200">-</span>}
+                      {cat.description || (
+                        <span className="text-gray-200">-</span>
+                      )}
                     </td>
                     <td className="py-4 px-5 text-center">
                       <span className="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">
@@ -255,7 +276,11 @@ export default function CategoriesPage() {
         {/* Pagination */}
         <div className="mt-5 flex items-center justify-between">
           <p className="text-sm text-gray-400">
-            Total: <span className="font-semibold text-gray-600">{meta.totalItems}</span> categories
+            Total:{" "}
+            <span className="font-semibold text-gray-600">
+              {meta.totalItems}
+            </span>{" "}
+            categories
           </p>
           <Pagination
             currentPage={meta.page}
@@ -294,7 +319,9 @@ export default function CategoriesPage() {
                   autoFocus
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-xs mt-2 ml-1">{errors.name.message}</p>
+                  <p className="text-red-500 text-xs mt-2 ml-1">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
               <div>

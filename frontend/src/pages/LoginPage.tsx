@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import {
   Eye,
   EyeOff,
-  Sparkles,
   ShieldCheck,
   BarChart3,
   Package,
@@ -58,7 +57,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
       {/* ========== KIRI - Ilustrasi / Branding ========== */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 relative overflow-hidden items-center justify-center p-12">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 relative overflow-hidden items-center justify-center p-12 rounded-tr-3xl rounded-br-3xl">
         {/* Decorative elements */}
         <div className="absolute top-[-15%] left-[-10%] w-125 h-125 bg-blue-500/15 rounded-full blur-3xl" />
         <div className="absolute bottom-[-15%] right-[-10%] w-100 h-100 bg-indigo-500/15 rounded-full blur-3xl" />
@@ -77,14 +76,13 @@ export default function LoginPage() {
         <div className="relative z-10 max-w-lg animate-fadeIn">
           {/* Logo */}
           <div className="flex items-center gap-4 mb-12">
-            <div className="w-14 h-14 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <Sparkles size={28} className="text-white" />
-            </div>
             <div>
               <h1 className="text-2xl font-bold text-white tracking-tight">
                 Admin Panel
               </h1>
-              <p className="text-blue-300/60 text-sm">Product Management System</p>
+              <p className="text-blue-300/60 text-sm">
+                Product Management System
+              </p>
             </div>
           </div>
 
@@ -122,36 +120,6 @@ export default function LoginPage() {
               </div>
             ))}
           </div>
-
-          {/* Decorative floating cards */}
-          <div className="mt-14 relative h-32">
-            {/* Card 1 */}
-            <div className="absolute left-0 top-0 bg-white/7 backdrop-blur-sm border border-white/8 rounded-2xl p-4 w-52 animate-slideUp">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-emerald-500/20 rounded-xl flex items-center justify-center">
-                  <BarChart3 size={14} className="text-emerald-400" />
-                </div>
-                <span className="text-xs text-white/60 font-medium">Revenue</span>
-              </div>
-              <p className="text-lg font-bold text-white">Rp 24.5M</p>
-              <span className="text-xs text-emerald-400 font-medium">+12.5%</span>
-            </div>
-
-            {/* Card 2 */}
-            <div
-              className="absolute left-56 top-4 bg-white/7 backdrop-blur-sm border border-white/8 rounded-2xl p-4 w-44 animate-slideUp"
-              style={{ animationDelay: "150ms" }}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                  <Package size={14} className="text-blue-400" />
-                </div>
-                <span className="text-xs text-white/60 font-medium">Products</span>
-              </div>
-              <p className="text-lg font-bold text-white">1,248</p>
-              <span className="text-xs text-blue-400 font-medium">Active</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -159,20 +127,15 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 xl:w-[45%] flex items-center justify-center p-6 sm:p-10 bg-gray-50/80">
         <div className="w-full max-w-md animate-fadeIn">
           {/* Mobile logo - hanya tampil di mobile */}
-          <div className="lg:hidden flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <Sparkles size={22} className="text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
-              <p className="text-xs text-gray-400">Product Management</p>
-            </div>
+          <div className="lg:hidden mb-10">
+            <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+            <p className="text-xs text-gray-400">Product Management</p>
           </div>
 
           {/* Welcome text */}
           <div className="mb-8">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-              Selamat datang! 👋
+              Selamat datang!
             </h2>
             <p className="text-gray-400 mt-2 text-sm">
               Masukkan kredensial untuk mengakses dashboard
@@ -246,8 +209,20 @@ export default function LoginPage() {
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                   Memproses...
                 </span>

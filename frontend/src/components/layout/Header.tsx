@@ -14,10 +14,10 @@ export default function Header({ title, subtitle }: HeaderProps) {
     <header className="bg-white/80 backdrop-blur-xl border-b border-gray-100 px-8 py-5 flex items-center justify-between sticky top-0 z-20">
       {/* Judul halaman */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 tracking-tight">{title}</h2>
-        {subtitle && (
-          <p className="text-sm text-gray-400 mt-0.5">{subtitle}</p>
-        )}
+        <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
+          {title}
+        </h2>
+        {subtitle && <p className="text-sm text-gray-400 mt-0.5">{subtitle}</p>}
       </div>
 
       {/* Right side */}
@@ -37,8 +37,12 @@ export default function Header({ title, subtitle }: HeaderProps) {
             {user?.name?.charAt(0)?.toUpperCase() || "A"}
           </div>
           <div className="text-sm hidden sm:block">
-            <p className="font-semibold text-gray-800">{user?.name || "Admin"}</p>
-            <p className="text-gray-400 text-xs">{user?.role || "Administrator"}</p>
+            <p className="font-semibold text-gray-800">
+              {user?.name || "Admin"}
+            </p>
+            <p className="text-gray-400 text-xs">
+              {user?.role || "Administrator"}
+            </p>
           </div>
         </div>
       </div>

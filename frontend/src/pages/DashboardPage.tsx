@@ -1,10 +1,22 @@
 // Dashboard Page - ringkasan data (modern rounded UI)
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FolderTree, Package, Users, TrendingUp, ArrowRight } from "lucide-react";
+import {
+  FolderTree,
+  Package,
+  Users,
+  TrendingUp,
+  ArrowRight,
+  MessageSquare,
+  Bot,
+  CheckCircle2,
+  AlertCircle,
+  Info,
+} from "lucide-react";
 import Header from "../components/layout/Header";
 import { categoriesService } from "../services/categories.service";
 import { productsService } from "../services/products.service";
+import { useAuthStore } from "../store/authStore";
 
 interface Stats {
   totalCategories: number;
@@ -17,6 +29,7 @@ export default function DashboardPage() {
     totalProducts: 0,
   });
   const [loading, setLoading] = useState(true);
+  const user = useAuthStore((s) => s.user);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -94,11 +107,15 @@ export default function DashboardPage() {
                 >
                   <card.icon size={22} className="text-white" />
                 </div>
-                <div className={`${card.bgLight} ${card.textColor} text-[11px] font-semibold px-3 py-1 rounded-full`}>
+                <div
+                  className={`${card.bgLight} ${card.textColor} text-[11px] font-semibold px-3 py-1 rounded-full`}
+                >
                   +0%
                 </div>
               </div>
-              <p className="text-[13px] text-gray-400 font-medium">{card.title}</p>
+              <p className="text-[13px] text-gray-400 font-medium">
+                {card.title}
+              </p>
               <p className="text-3xl font-extrabold text-gray-900 mt-1 tracking-tight">
                 {loading ? (
                   <span className="skeleton inline-block w-16 h-8" />
@@ -139,28 +156,122 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Quick Tips */}
-          <div className="bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl p-7 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
-            <div className="relative z-10">
-              <div className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center mb-4">
-                <TrendingUp size={20} className="text-blue-400" />
+          {/* Chat-style Activity Log */}
+          <div className="bg-white rounded-2xl border border-gray-100 flex flex-col overflow-hidden">
+            {/* Chat header */}
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-9 h-9 bg-linear-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                <MessageSquare size={16} className="text-white" />
               </div>
-              <h3 className="text-lg font-bold mb-2">Tips Penggunaan</h3>
-              <ul className="text-sm text-slate-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
-                  Gunakan search bar untuk mencari data dengan cepat
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
-                  Klik tombol + untuk menambah data baru
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
-                  Filter products berdasarkan category
-                </li>
-              </ul>
+              <div>
+                <h3 className="text-sm font-bold text-gray-900">
+                  System Activity
+                </h3>
+                <p className="text-[11px] text-gray-400">Real-time updates</p>
+              </div>
+              <span className="ml-auto w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse" />
+            </div>
+
+            {/* Chat messages */}
+            <div className="flex-1 p-5 space-y-4 overflow-y-auto">
+              {/* Bot message */}
+              <div className="flex gap-3 animate-fadeIn">
+                <div className="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                  <Bot size={16} className="text-blue-500" />
+                </div>
+                <div className="bg-gray-50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+                  <p className="text-sm text-gray-700">
+                    Selamat datang kembali,{" "}
+                    <span className="font-semibold text-blue-600">
+                      {user?.name || "Admin"}
+                    </span>
+                    ! Sistem berjalan normal.
+                  </p>
+                  <span className="text-[10px] text-gray-300 mt-1 block">
+                    Baru saja
+                  </span>
+                </div>
+              </div>
+
+              {/* Status message */}
+              <div
+                className="flex gap-3 animate-fadeIn"
+                style={{ animationDelay: "100ms" }}
+              >
+                <div className="w-8 h-8 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0">
+                  <CheckCircle2 size={16} className="text-emerald-500" />
+                </div>
+                <div className="bg-emerald-50/50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+                  <p className="text-sm text-gray-700">
+                    API Backend{" "}
+                    <span className="font-semibold text-emerald-600">
+                      Connected
+                    </span>{" "}
+                    — Semua endpoint berjalan normal.
+                  </p>
+                  <span className="text-[10px] text-gray-300 mt-1 block">
+                    2 menit lalu
+                  </span>
+                </div>
+              </div>
+
+              {/* Data summary */}
+              <div
+                className="flex gap-3 animate-fadeIn"
+                style={{ animationDelay: "200ms" }}
+              >
+                <div className="w-8 h-8 bg-violet-50 rounded-xl flex items-center justify-center shrink-0">
+                  <Info size={16} className="text-violet-500" />
+                </div>
+                <div className="bg-violet-50/50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+                  <p className="text-sm text-gray-700">
+                    Database memiliki{" "}
+                    <span className="font-semibold text-violet-600">
+                      {loading ? "..." : stats.totalCategories} categories
+                    </span>{" "}
+                    dan{" "}
+                    <span className="font-semibold text-violet-600">
+                      {loading ? "..." : stats.totalProducts} products
+                    </span>
+                    .
+                  </p>
+                  <span className="text-[10px] text-gray-300 mt-1 block">
+                    5 menit lalu
+                  </span>
+                </div>
+              </div>
+
+              {/* Tip message */}
+              <div
+                className="flex gap-3 animate-fadeIn"
+                style={{ animationDelay: "300ms" }}
+              >
+                <div className="w-8 h-8 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
+                  <AlertCircle size={16} className="text-amber-500" />
+                </div>
+                <div className="bg-amber-50/50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold text-amber-600">Tip:</span>{" "}
+                    Gunakan fitur search & filter untuk navigasi data lebih
+                    cepat.
+                  </p>
+                  <span className="text-[10px] text-gray-300 mt-1 block">
+                    10 menit lalu
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Chat input (decorative) */}
+            <div className="px-5 py-4 border-t border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 bg-gray-50 rounded-2xl px-4 py-3 text-sm text-gray-300 select-none">
+                  System log otomatis...
+                </div>
+                <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20">
+                  <ArrowRight size={16} className="text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -18,10 +18,7 @@ import { getErrorMessage } from "../utils/error";
 // Schema validasi product
 const productSchema = z.object({
   name: z.string().min(1, "Nama product wajib diisi"),
-  categoryId: z
-    .string()
-    .min(1, "Pilih category")
-    .transform(Number),
+  categoryId: z.string().min(1, "Pilih category").transform(Number),
   price: z
     .string()
     .min(1, "Harga wajib diisi")
@@ -264,21 +261,40 @@ export default function ProductsPage() {
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="border-b border-gray-50">
-                    <td className="py-4 px-5"><div className="skeleton w-6 h-4" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-32 h-4" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-20 h-5 rounded-full" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-24 h-4 ml-auto" /></td>
-                    <td className="py-4 px-5 hidden lg:table-cell"><div className="skeleton w-48 h-4" /></td>
-                    <td className="py-4 px-5"><div className="skeleton w-16 h-4 mx-auto" /></td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-6 h-4" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-32 h-4" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-20 h-5 rounded-full" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-24 h-4 ml-auto" />
+                    </td>
+                    <td className="py-4 px-5 hidden lg:table-cell">
+                      <div className="skeleton w-48 h-4" />
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="skeleton w-16 h-4 mx-auto" />
+                    </td>
                   </tr>
                 ))
               ) : products.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="text-center py-16">
                     <div className="text-gray-300">
-                      <Package size={48} className="mx-auto mb-3 text-gray-200" />
-                      <p className="font-medium text-gray-400">Tidak ada data</p>
-                      <p className="text-xs text-gray-300 mt-1">Tambahkan product pertama</p>
+                      <Package
+                        size={48}
+                        className="mx-auto mb-3 text-gray-200"
+                      />
+                      <p className="font-medium text-gray-400">
+                        Tidak ada data
+                      </p>
+                      <p className="text-xs text-gray-300 mt-1">
+                        Tambahkan product pertama
+                      </p>
                     </div>
                   </td>
                 </tr>
@@ -292,7 +308,9 @@ export default function ProductsPage() {
                       {(page - 1) * 10 + idx + 1}
                     </td>
                     <td className="py-4 px-5">
-                      <span className="font-semibold text-gray-800">{prod.name}</span>
+                      <span className="font-semibold text-gray-800">
+                        {prod.name}
+                      </span>
                     </td>
                     <td className="py-4 px-5">
                       <span className="bg-indigo-50 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-full">
@@ -300,10 +318,14 @@ export default function ProductsPage() {
                       </span>
                     </td>
                     <td className="py-4 px-5 text-right">
-                      <span className="font-semibold text-emerald-600">{formatPrice(prod.price)}</span>
+                      <span className="font-semibold text-emerald-600">
+                        {formatPrice(prod.price)}
+                      </span>
                     </td>
                     <td className="py-4 px-5 text-gray-400 truncate max-w-xs hidden lg:table-cell">
-                      {prod.description || <span className="text-gray-200">-</span>}
+                      {prod.description || (
+                        <span className="text-gray-200">-</span>
+                      )}
                     </td>
                     <td className="py-4 px-5">
                       <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -333,7 +355,11 @@ export default function ProductsPage() {
         {/* Pagination */}
         <div className="mt-5 flex items-center justify-between">
           <p className="text-sm text-gray-400">
-            Total: <span className="font-semibold text-gray-600">{meta.totalItems}</span> products
+            Total:{" "}
+            <span className="font-semibold text-gray-600">
+              {meta.totalItems}
+            </span>{" "}
+            products
           </p>
           <Pagination
             currentPage={meta.page}
@@ -372,7 +398,9 @@ export default function ProductsPage() {
                   autoFocus
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-xs mt-2 ml-1">{errors.name.message}</p>
+                  <p className="text-red-500 text-xs mt-2 ml-1">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
 
@@ -392,7 +420,9 @@ export default function ProductsPage() {
                   ))}
                 </select>
                 {errors.categoryId && (
-                  <p className="text-red-500 text-xs mt-2 ml-1">{errors.categoryId.message}</p>
+                  <p className="text-red-500 text-xs mt-2 ml-1">
+                    {errors.categoryId.message}
+                  </p>
                 )}
               </div>
 
@@ -408,7 +438,9 @@ export default function ProductsPage() {
                   className={`w-full px-4 py-3 text-sm rounded-2xl border-2 ${errors.price ? "border-red-200 bg-red-50/50 focus:border-red-400" : "border-gray-100 bg-gray-50/80 focus:border-blue-400"} focus:ring-4 focus:ring-blue-500/10 outline-none transition-all placeholder:text-gray-300`}
                 />
                 {errors.price && (
-                  <p className="text-red-500 text-xs mt-2 ml-1">{errors.price.message}</p>
+                  <p className="text-red-500 text-xs mt-2 ml-1">
+                    {errors.price.message}
+                  </p>
                 )}
               </div>
 

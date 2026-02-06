@@ -1,7 +1,7 @@
 // Sidebar - navigasi utama admin panel (modern rounded UI)
 import { memo } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LayoutDashboard, FolderTree, Package, LogOut, Sparkles } from "lucide-react";
+import { LayoutDashboard, FolderTree, Package, LogOut } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
 // Menu navigasi
@@ -22,16 +22,15 @@ function Sidebar() {
   };
 
   return (
-    <aside className="w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white h-screen flex flex-col fixed left-0 top-0">
+    <aside className="w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white h-screen flex flex-col fixed left-0 top-0 rounded-tr-3xl rounded-br-3xl">
       {/* Logo */}
       <div className="px-7 py-7">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-            <Sparkles size={20} className="text-white" />
-          </div>
           <div>
             <h1 className="text-lg font-bold tracking-tight">Admin Panel</h1>
-            <p className="text-[11px] text-slate-500 font-medium">Product Management</p>
+            <p className="text-[11px] text-slate-500 font-medium">
+              Product Management
+            </p>
           </div>
         </div>
       </div>
@@ -69,8 +68,12 @@ function Sidebar() {
               {user?.name?.charAt(0)?.toUpperCase() || "A"}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-white truncate">{user?.name || "Admin"}</p>
-              <p className="text-[11px] text-slate-500 truncate">{user?.email || "admin@mail.com"}</p>
+              <p className="text-sm font-semibold text-white truncate">
+                {user?.name || "Admin"}
+              </p>
+              <p className="text-[11px] text-slate-500 truncate">
+                {user?.email || "admin@mail.com"}
+              </p>
             </div>
           </div>
         </div>
