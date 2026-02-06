@@ -1,4 +1,6 @@
-// Pagination - navigasi halaman data
+// Pagination - navigasi halaman data (modern rounded UI)
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -12,7 +14,6 @@ export default function Pagination({
 }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  // Buat array nomor halaman (max 5 terlihat)
   const getPages = () => {
     const pages: number[] = [];
     const start = Math.max(1, currentPage - 2);
@@ -22,38 +23,35 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex items-center gap-1">
-      {/* Tombol Previous */}
+    <div className="flex items-center gap-1.5">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-sm rounded-lg border border-gray-300 disabled:opacity-40 hover:bg-gray-50 transition"
+        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center"
       >
-        Prev
+        <ChevronLeft size={16} className="text-gray-500" />
       </button>
 
-      {/* Nomor halaman */}
       {getPages().map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`px-3 py-2 text-sm rounded-lg transition ${
+          className={`w-9 h-9 rounded-xl text-sm font-medium transition-all ${
             page === currentPage
-              ? "bg-blue-600 text-white"
-              : "border border-gray-300 hover:bg-gray-50"
+              ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20"
+              : "border border-gray-200 text-gray-500 hover:bg-gray-50"
           }`}
         >
           {page}
         </button>
       ))}
 
-      {/* Tombol Next */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-sm rounded-lg border border-gray-300 disabled:opacity-40 hover:bg-gray-50 transition"
+        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center"
       >
-        Next
+        <ChevronRight size={16} className="text-gray-500" />
       </button>
     </div>
   );

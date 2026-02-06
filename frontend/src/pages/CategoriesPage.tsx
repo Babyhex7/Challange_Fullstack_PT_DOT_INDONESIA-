@@ -1,6 +1,9 @@
 // Categories Page - CRUD categories (tabel, search, pagination, modal form, hapus)
 import { useEffect, useState, useCallback } from "react";
-import { Search, Plus, Pencil, Trash2, X } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Search, Plus, Pencil, Trash2, X, FolderTree } from "lucide-react";
 import toast from "react-hot-toast";
 import Header from "../components/layout/Header";
 import Pagination from "../components/ui/Pagination";
@@ -9,6 +12,14 @@ import { categoriesService } from "../services/categories.service";
 import type { Category } from "../types/category.types";
 import type { PaginationMeta } from "../types/api.types";
 import { getErrorMessage } from "../utils/error";
+
+// Schema validasi category
+const categorySchema = z.object({
+  name: z.string().min(1, "Nama category wajib diisi"),
+  description: z.string().optional(),
+});
+
+type CategoryForm = z.infer<typeof categorySchema>;
 
 export default function CategoriesPage() {
   // State data & loading
@@ -28,9 +39,18 @@ export default function CategoriesPage() {
   // State form modal
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
-  const [formName, setFormName] = useState("");
-  const [formDesc, setFormDesc] = useState("");
   const [saving, setSaving] = useState(false);
+
+  // React Hook Form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CategoryForm>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: { name: "", description: "" },
+  });
 
   // State hapus
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -66,40 +86,26 @@ export default function CategoriesPage() {
   // Buka form buat tambah
   const openAdd = () => {
     setEditId(null);
-    setFormName("");
-    setFormDesc("");
+    reset({ name: "", description: "" });
     setShowForm(true);
   };
 
   // Buka form buat edit
   const openEdit = (cat: Category) => {
     setEditId(cat.id);
-    setFormName(cat.name);
-    setFormDesc(cat.description || "");
+    reset({ name: cat.name, description: cat.description || "" });
     setShowForm(true);
   };
 
   // Simpan form (create / update)
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formName.trim()) {
-      toast.error("Nama category wajib diisi");
-      return;
-    }
-
+  const onSave = async (data: CategoryForm) => {
     setSaving(true);
     try {
       if (editId) {
-        await categoriesService.update(editId, {
-          name: formName,
-          description: formDesc,
-        });
+        await categoriesService.update(editId, data);
         toast.success("Category berhasil diupdate");
       } else {
-        await categoriesService.create({
-          name: formName,
-          description: formDesc,
-        });
+        await categoriesService.create(data);
         toast.success("Category berhasil ditambah");
       }
       setShowForm(false);
@@ -129,29 +135,29 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <Header title="Categories" />
+      <Header title="Categories" subtitle="Kelola data kategori produk" />
       <div className="p-8">
-        {/* Toolbar: search + tombol tambah */}
+        {/* Toolbar */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6 items-start sm:items-center justify-between">
           {/* Search */}
-          <div className="relative w-full sm:w-72">
+          <div className="relative w-full sm:w-80">
             <Search
               size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"
             />
             <input
               type="text"
               placeholder="Cari category..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full pl-11 pr-4 py-3 text-sm rounded-2xl border-2 border-gray-100 bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 outline-none transition-all placeholder:text-gray-300"
             />
           </div>
 
           {/* Tombol Tambah */}
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition shrink-0"
+            className="flex items-center gap-2 px-5 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 shrink-0 active:scale-[0.98]"
           >
             <Plus size={18} />
             Tambah Category
@@ -159,75 +165,83 @@ export default function CategoriesPage() {
         </div>
 
         {/* Tabel */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="text-left py-3 px-4 font-medium text-gray-600 w-12">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider w-12">
                   #
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">
+                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider">
                   Nama
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-600">
+                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider">
                   Deskripsi
                 </th>
-                <th className="text-center py-3 px-4 font-medium text-gray-600 w-24">
+                <th className="text-center py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider w-28">
                   Products
                 </th>
-                <th className="text-center py-3 px-4 font-medium text-gray-600 w-28">
+                <th className="text-center py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider w-28">
                   Aksi
                 </th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr>
-                  <td colSpan={5} className="text-center py-12 text-gray-400">
-                    Memuat data...
-                  </td>
-                </tr>
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i} className="border-b border-gray-50">
+                    <td className="py-4 px-5"><div className="skeleton w-6 h-4" /></td>
+                    <td className="py-4 px-5"><div className="skeleton w-32 h-4" /></td>
+                    <td className="py-4 px-5"><div className="skeleton w-48 h-4" /></td>
+                    <td className="py-4 px-5 text-center"><div className="skeleton w-10 h-5 mx-auto rounded-full" /></td>
+                    <td className="py-4 px-5"><div className="skeleton w-16 h-4 mx-auto" /></td>
+                  </tr>
+                ))
               ) : categories.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-12 text-gray-400">
-                    Tidak ada data
+                  <td colSpan={5} className="text-center py-16">
+                    <div className="text-gray-300">
+                      <FolderTree size={48} className="mx-auto mb-3 text-gray-200" />
+                      <p className="font-medium text-gray-400">Tidak ada data</p>
+                      <p className="text-xs text-gray-300 mt-1">Tambahkan category pertama</p>
+                    </div>
                   </td>
                 </tr>
               ) : (
                 categories.map((cat, idx) => (
                   <tr
                     key={cat.id}
-                    className="border-b border-gray-100 hover:bg-gray-50 transition"
+                    className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors group"
                   >
-                    <td className="py-3 px-4 text-gray-400">
+                    <td className="py-4 px-5 text-gray-300 text-xs font-medium">
                       {(page - 1) * 10 + idx + 1}
                     </td>
-                    <td className="py-3 px-4 font-medium text-gray-800">
-                      {cat.name}
+                    <td className="py-4 px-5">
+                      <span className="font-semibold text-gray-800">{cat.name}</span>
                     </td>
-                    <td className="py-3 px-4 text-gray-500 truncate max-w-xs">
-                      {cat.description || "-"}
+                    <td className="py-4 px-5 text-gray-400 truncate max-w-xs">
+                      {cat.description || <span className="text-gray-200">-</span>}
                     </td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
+                    <td className="py-4 px-5 text-center">
+                      <span className="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">
                         {cat.productsCount ?? 0}
                       </span>
                     </td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center justify-center gap-1">
+                    <td className="py-4 px-5">
+                      <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => openEdit(cat)}
-                          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                           title="Edit"
                         >
-                          <Pencil size={16} />
+                          <Pencil size={15} />
                         </button>
                         <button
                           onClick={() => setDeleteId(cat.id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
                           title="Hapus"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </td>
@@ -239,9 +253,9 @@ export default function CategoriesPage() {
         </div>
 
         {/* Pagination */}
-        <div className="mt-4 flex items-center justify-between">
-          <p className="text-sm text-gray-500">
-            Total: {meta.totalItems} categories
+        <div className="mt-5 flex items-center justify-between">
+          <p className="text-sm text-gray-400">
+            Total: <span className="font-semibold text-gray-600">{meta.totalItems}</span> categories
           </p>
           <Pagination
             currentPage={meta.page}
@@ -251,60 +265,61 @@ export default function CategoriesPage() {
         </div>
       </div>
 
-      {/* Modal Form Tambah/Edit */}
+      {/* Modal Form */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4 shadow-xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-3xl p-7 w-full max-w-md mx-4 shadow-2xl animate-slideUp">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold text-gray-900">
                 {editId ? "Edit Category" : "Tambah Category"}
               </h3>
               <button
                 onClick={() => setShowForm(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="w-8 h-8 rounded-xl bg-gray-50 hover:bg-gray-100 flex items-center justify-center transition-colors"
               >
-                <X size={20} />
+                <X size={16} className="text-gray-400" />
               </button>
             </div>
 
-            <form onSubmit={handleSave} className="space-y-4">
+            <form onSubmit={handleSubmit(onSave)} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
                   Nama
                 </label>
                 <input
                   type="text"
-                  value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
+                  {...register("name")}
                   placeholder="Nama category"
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  className={`w-full px-4 py-3 text-sm rounded-2xl border-2 ${errors.name ? "border-red-200 bg-red-50/50 focus:border-red-400" : "border-gray-100 bg-gray-50/80 focus:border-blue-400"} focus:ring-4 focus:ring-blue-500/10 outline-none transition-all placeholder:text-gray-300`}
                   autoFocus
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-2 ml-1">{errors.name.message}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
                   Deskripsi
                 </label>
                 <textarea
-                  value={formDesc}
-                  onChange={(e) => setFormDesc(e.target.value)}
+                  {...register("description")}
                   placeholder="Deskripsi (opsional)"
                   rows={3}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+                  className="w-full px-4 py-3 text-sm rounded-2xl border-2 border-gray-100 bg-gray-50/80 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 outline-none transition-all resize-none placeholder:text-gray-300"
                 />
               </div>
-              <div className="flex gap-3 justify-end">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+                  className="flex-1 px-4 py-3 text-sm font-medium text-gray-600 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-all border border-gray-100"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
+                  className="flex-1 px-4 py-3 text-sm font-medium text-white bg-linear-to-r from-blue-600 to-indigo-600 rounded-2xl hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 transition-all shadow-lg shadow-blue-500/20"
                 >
                   {saving ? "Menyimpan..." : "Simpan"}
                 </button>
@@ -314,7 +329,6 @@ export default function CategoriesPage() {
         </div>
       )}
 
-      {/* Modal Konfirmasi Hapus */}
       <DeleteModal
         isOpen={deleteId !== null}
         title="Hapus Category"

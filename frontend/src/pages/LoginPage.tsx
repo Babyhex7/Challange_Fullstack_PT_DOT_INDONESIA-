@@ -1,30 +1,53 @@
-// Login Page - halaman login admin
+// Login Page - split layout: kiri ilustrasi, kanan form login
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useAuthStore } from "../store/authStore";
 import toast from "react-hot-toast";
-import { LogIn, Eye, EyeOff } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Sparkles,
+  ShieldCheck,
+  BarChart3,
+  Package,
+  ArrowRight,
+} from "lucide-react";
 import { getErrorMessage } from "../utils/error";
 
+// Schema validasi login
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email wajib diisi")
+    .email("Format email tidak valid"),
+  password: z
+    .string()
+    .min(1, "Password wajib diisi")
+    .min(6, "Password minimal 6 karakter"),
+});
+
+type LoginForm = z.infer<typeof loginSchema>;
+
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  // Handle submit form login
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
-    // Validasi sederhana
-    if (!email || !password) {
-      toast.error("Email dan password wajib diisi!");
-      return;
-    }
-
+  const onSubmit = async (data: LoginForm) => {
     try {
-      await login(email, password);
+      await login(data.email, data.password);
       toast.success("Login berhasil!");
       navigate("/");
     } catch (error: unknown) {
@@ -33,77 +56,236 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <LogIn size={32} className="text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-white">Admin Panel</h1>
-          <p className="text-gray-400 mt-2">Masuk untuk mengelola data</p>
-        </div>
+    <div className="min-h-screen flex">
+      {/* ========== KIRI - Ilustrasi / Branding ========== */}
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 relative overflow-hidden items-center justify-center p-12">
+        {/* Decorative elements */}
+        <div className="absolute top-[-15%] left-[-10%] w-125 h-125 bg-blue-500/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-[-15%] right-[-10%] w-100 h-100 bg-indigo-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-blue-600/5 rounded-full blur-3xl" />
 
-        {/* Form Login */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-2xl shadow-xl p-8 space-y-5"
-        >
-          {/* Input Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@example.com"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm"
-              autoFocus
-            />
-          </div>
+        {/* Grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
 
-          {/* Input Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm pr-12"
-              />
-              {/* Toggle show/hide password */}
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+        <div className="relative z-10 max-w-lg animate-fadeIn">
+          {/* Logo */}
+          <div className="flex items-center gap-4 mb-12">
+            <div className="w-14 h-14 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <Sparkles size={28} className="text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white tracking-tight">
+                Admin Panel
+              </h1>
+              <p className="text-blue-300/60 text-sm">Product Management System</p>
             </div>
           </div>
 
-          {/* Tombol Login */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition text-sm"
-          >
-            {isLoading ? "Memproses..." : "Masuk"}
-          </button>
+          {/* Headline */}
+          <h2 className="text-4xl xl:text-5xl font-extrabold text-white leading-tight mb-6">
+            Kelola semua
+            <br />
+            <span className="bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              produk & kategori
+            </span>
+            <br />
+            dalam satu dashboard.
+          </h2>
 
-          {/* Info default login */}
-          <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
-            <p className="font-medium mb-1">Default Login:</p>
-            <p>Email: admin@example.com</p>
-            <p>Password: password123</p>
+          <p className="text-blue-200/50 text-base leading-relaxed mb-10 max-w-md">
+            Pantau performa, atur stok, dan kelola data bisnis Anda dengan
+            antarmuka modern yang intuitif.
+          </p>
+
+          {/* Feature badges */}
+          <div className="flex flex-wrap gap-3">
+            {[
+              { icon: ShieldCheck, label: "Keamanan JWT" },
+              { icon: BarChart3, label: "Analitik Real-time" },
+              { icon: Package, label: "CRUD Lengkap" },
+            ].map((feat) => (
+              <div
+                key={feat.label}
+                className="flex items-center gap-2.5 bg-white/6 backdrop-blur-sm border border-white/8 rounded-2xl px-4 py-2.5"
+              >
+                <feat.icon size={16} className="text-blue-400" />
+                <span className="text-sm text-blue-100/80 font-medium">
+                  {feat.label}
+                </span>
+              </div>
+            ))}
           </div>
-        </form>
+
+          {/* Decorative floating cards */}
+          <div className="mt-14 relative h-32">
+            {/* Card 1 */}
+            <div className="absolute left-0 top-0 bg-white/7 backdrop-blur-sm border border-white/8 rounded-2xl p-4 w-52 animate-slideUp">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                  <BarChart3 size={14} className="text-emerald-400" />
+                </div>
+                <span className="text-xs text-white/60 font-medium">Revenue</span>
+              </div>
+              <p className="text-lg font-bold text-white">Rp 24.5M</p>
+              <span className="text-xs text-emerald-400 font-medium">+12.5%</span>
+            </div>
+
+            {/* Card 2 */}
+            <div
+              className="absolute left-56 top-4 bg-white/7 backdrop-blur-sm border border-white/8 rounded-2xl p-4 w-44 animate-slideUp"
+              style={{ animationDelay: "150ms" }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                  <Package size={14} className="text-blue-400" />
+                </div>
+                <span className="text-xs text-white/60 font-medium">Products</span>
+              </div>
+              <p className="text-lg font-bold text-white">1,248</p>
+              <span className="text-xs text-blue-400 font-medium">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== KANAN - Form Login ========== */}
+      <div className="w-full lg:w-1/2 xl:w-[45%] flex items-center justify-center p-6 sm:p-10 bg-gray-50/80">
+        <div className="w-full max-w-md animate-fadeIn">
+          {/* Mobile logo - hanya tampil di mobile */}
+          <div className="lg:hidden flex items-center gap-3 mb-10">
+            <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+              <Sparkles size={22} className="text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+              <p className="text-xs text-gray-400">Product Management</p>
+            </div>
+          </div>
+
+          {/* Welcome text */}
+          <div className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+              Selamat datang! 👋
+            </h2>
+            <p className="text-gray-400 mt-2 text-sm">
+              Masukkan kredensial untuk mengakses dashboard
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                {...register("email")}
+                placeholder="admin@example.com"
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${
+                  errors.email
+                    ? "border-red-300 focus:border-red-400 bg-red-50/50"
+                    : "border-gray-200 focus:border-blue-400 bg-white"
+                } focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200 text-sm placeholder:text-gray-300`}
+                autoFocus
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-2 ml-1 flex items-center gap-1">
+                  <span className="w-1 h-1 bg-red-500 rounded-full" />
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-600 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                  placeholder="••••••••"
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 ${
+                    errors.password
+                      ? "border-red-300 focus:border-red-400 bg-red-50/50"
+                      : "border-gray-200 focus:border-blue-400 bg-white"
+                  } focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200 text-sm pr-12 placeholder:text-gray-300`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-2 ml-1 flex items-center gap-1">
+                  <span className="w-1 h-1 bg-red-500 rounded-full" />
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-linear-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-semibold hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Memproses...
+                </span>
+              ) : (
+                <>
+                  Masuk ke Dashboard
+                  <ArrowRight size={16} />
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Demo credentials */}
+          <div className="mt-8 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <p className="font-semibold text-gray-700 text-sm mb-2">
+              🔑 Demo Credentials
+            </p>
+            <div className="space-y-1.5 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-400">Email</span>
+                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-600 border border-gray-100">
+                  admin@example.com
+                </code>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-400">Password</span>
+                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-600 border border-gray-100">
+                  password123
+                </code>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <p className="text-center text-xs text-gray-300 mt-8">
+            &copy; 2026 Admin Panel. Built with React & NestJS.
+          </p>
+        </div>
       </div>
     </div>
   );

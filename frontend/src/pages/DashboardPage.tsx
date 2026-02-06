@@ -1,11 +1,11 @@
-// Dashboard Page - ringkasan data (total categories, products, user)
+// Dashboard Page - ringkasan data (modern rounded UI)
 import { useEffect, useState } from "react";
-import { FolderTree, Package, Users, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
+import { FolderTree, Package, Users, TrendingUp, ArrowRight } from "lucide-react";
 import Header from "../components/layout/Header";
 import { categoriesService } from "../services/categories.service";
 import { productsService } from "../services/products.service";
 
-// Tipe data statistik
 interface Stats {
   totalCategories: number;
   totalProducts: number;
@@ -18,7 +18,6 @@ export default function DashboardPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  // Ambil data statistik dari API
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -39,87 +38,130 @@ export default function DashboardPage() {
     fetchStats();
   }, []);
 
-  // Data kartu statistik
   const cards = [
     {
       title: "Total Categories",
       value: stats.totalCategories,
       icon: FolderTree,
-      color: "bg-blue-500",
+      gradient: "from-blue-500 to-blue-600",
+      shadow: "shadow-blue-500/20",
       bgLight: "bg-blue-50",
+      textColor: "text-blue-600",
     },
     {
       title: "Total Products",
       value: stats.totalProducts,
       icon: Package,
-      color: "bg-green-500",
-      bgLight: "bg-green-50",
+      gradient: "from-emerald-500 to-emerald-600",
+      shadow: "shadow-emerald-500/20",
+      bgLight: "bg-emerald-50",
+      textColor: "text-emerald-600",
     },
     {
       title: "Admin Users",
       value: 1,
       icon: Users,
-      color: "bg-purple-500",
-      bgLight: "bg-purple-50",
+      gradient: "from-violet-500 to-violet-600",
+      shadow: "shadow-violet-500/20",
+      bgLight: "bg-violet-50",
+      textColor: "text-violet-600",
     },
     {
       title: "API Status",
       value: "Active",
       icon: TrendingUp,
-      color: "bg-orange-500",
-      bgLight: "bg-orange-50",
+      gradient: "from-amber-500 to-orange-500",
+      shadow: "shadow-amber-500/20",
+      bgLight: "bg-amber-50",
+      textColor: "text-amber-600",
     },
   ];
 
   return (
     <>
-      <Header title="Dashboard" />
+      <Header title="Dashboard" subtitle="Overview dan ringkasan data" />
       <div className="p-8">
         {/* Grid kartu statistik */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {cards.map((card) => (
             <div
               key={card.title}
-              className={`${card.bgLight} rounded-xl p-6 border border-gray-100`}
+              className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg hover:shadow-gray-100 transition-all duration-300 hover:-translate-y-0.5 group"
             >
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-5">
                 <div
-                  className={`${card.color} w-12 h-12 rounded-lg flex items-center justify-center`}
+                  className={`bg-linear-to-br ${card.gradient} w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${card.shadow}`}
                 >
-                  <card.icon size={24} className="text-white" />
+                  <card.icon size={22} className="text-white" />
+                </div>
+                <div className={`${card.bgLight} ${card.textColor} text-[11px] font-semibold px-3 py-1 rounded-full`}>
+                  +0%
                 </div>
               </div>
-              <p className="text-sm text-gray-500">{card.title}</p>
-              <p className="text-3xl font-bold text-gray-800 mt-1">
-                {loading ? "..." : card.value}
+              <p className="text-[13px] text-gray-400 font-medium">{card.title}</p>
+              <p className="text-3xl font-extrabold text-gray-900 mt-1 tracking-tight">
+                {loading ? (
+                  <span className="skeleton inline-block w-16 h-8" />
+                ) : (
+                  card.value
+                )}
               </p>
             </div>
           ))}
         </div>
 
-        {/* Info section */}
-        <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">
-            Selamat Datang di Admin Panel
-          </h3>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            Kelola categories dan products melalui sidebar navigasi di sebelah
-            kiri. Gunakan fitur pencarian dan pagination untuk memudahkan
-            pengelolaan data.
-          </p>
-          <div className="mt-4 flex gap-3">
-            <a
-              href="/categories"
-              className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition"
-            >
-              Kelola Categories
-            </a>
-            <a
-              href="/products"
-              className="px-4 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition"
-            >
-              Kelola Products
-            </a>
+        {/* Quick Actions */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="bg-white rounded-2xl border border-gray-100 p-7 hover:shadow-lg hover:shadow-gray-100 transition-all duration-300">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              Selamat Datang di Admin Panel
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Kelola categories dan products melalui sidebar navigasi di sebelah
+              kiri. Gunakan fitur pencarian dan pagination untuk memudahkan
+              pengelolaan data.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <Link
+                to="/categories"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30"
+              >
+                Kelola Categories
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                to="/products"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-medium rounded-2xl hover:bg-gray-100 transition-all border border-gray-100"
+              >
+                Kelola Products
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Quick Tips */}
+          <div className="bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl p-7 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+            <div className="relative z-10">
+              <div className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center mb-4">
+                <TrendingUp size={20} className="text-blue-400" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Tips Penggunaan</h3>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
+                  Gunakan search bar untuk mencari data dengan cepat
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
+                  Klik tombol + untuk menambah data baru
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 shrink-0" />
+                  Filter products berdasarkan category
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
