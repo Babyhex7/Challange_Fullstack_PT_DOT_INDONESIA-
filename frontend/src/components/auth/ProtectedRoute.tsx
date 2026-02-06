@@ -1,6 +1,6 @@
 // ProtectedRoute - cek apakah user sudah login, kalo belum redirect ke /login
-import { Navigate } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore';
+import { Navigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 
 interface Props {
   children: React.ReactNode;

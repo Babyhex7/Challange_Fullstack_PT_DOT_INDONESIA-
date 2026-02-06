@@ -1,13 +1,13 @@
 // Sidebar - navigasi utama admin panel
-import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FolderTree, Package, LogOut } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore';
+import { NavLink, useNavigate } from "react-router-dom";
+import { LayoutDashboard, FolderTree, Package, LogOut } from "lucide-react";
+import { useAuthStore } from "../../store/authStore";
 
 // Menu navigasi
 const menuItems = [
-  { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/categories', label: 'Categories', icon: FolderTree },
-  { path: '/products', label: 'Products', icon: Package },
+  { path: "/", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/categories", label: "Categories", icon: FolderTree },
+  { path: "/products", label: "Products", icon: Package },
 ];
 
 export default function Sidebar() {
@@ -17,7 +17,7 @@ export default function Sidebar() {
   // Handle logout
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -34,12 +34,12 @@ export default function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
-            end={item.path === '/'}
+            end={item.path === "/"}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
               }`
             }
           >

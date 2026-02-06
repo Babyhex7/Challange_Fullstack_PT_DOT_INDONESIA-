@@ -1,7 +1,7 @@
 // Auth Store - state management login/logout/profile pakai Zustand
-import { create } from 'zustand';
-import { User } from '../types/auth.types';
-import { authService } from '../services/auth.service';
+import { create } from "zustand";
+import type { User } from "../types/auth.types";
+import { authService } from "../services/auth.service";
 
 interface AuthState {
   user: User | null;
@@ -18,7 +18,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isLoading: false,
 
   // Login - simpan token & ambil profil
@@ -26,8 +26,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isLoading: true });
     try {
       const data = await authService.login({ email, password });
-      localStorage.setItem('token', data.access_token);
-      set({ token: data.access_token });
+      localStorage.setItem("token", data.accessToken);
+      set({ token: data.accessToken });
 
       // Setelah login, langsung ambil profil
       const user = await authService.getProfile();
@@ -52,7 +52,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   // Logout - hapus token & reset state
   logout: () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     set({ user: null, token: null });
   },
 
@@ -63,14 +63,14 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user });
     } catch {
       // Token expired/invalid, auto logout
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       set({ user: null, token: null });
     }
   },
 
   // Inisialisasi auth waktu app pertama load
   initAuth: async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) return;
 
     set({ isLoading: true });
@@ -78,7 +78,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const user = await authService.getProfile();
       set({ user, isLoading: false });
     } catch {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       set({ user: null, token: null, isLoading: false });
     }
   },

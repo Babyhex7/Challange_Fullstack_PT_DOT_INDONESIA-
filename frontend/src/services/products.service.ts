@@ -1,12 +1,23 @@
 // Service Products - panggil API CRUD products
-import api from './api';
-import { Product, CreateProductRequest, UpdateProductRequest } from '../types/product.types';
-import { ApiResponse, PaginatedResponse, QueryParams } from '../types/api.types';
+import api from "./api";
+import type {
+  Product,
+  CreateProductRequest,
+  UpdateProductRequest,
+} from "../types/product.types";
+import type {
+  ApiResponse,
+  PaginatedResponse,
+  QueryParams,
+} from "../types/api.types";
 
 export const productsService = {
   // Ambil semua products (pagination + search + filter category)
   getAll: async (params?: QueryParams) => {
-    const res = await api.get<ApiResponse<PaginatedResponse<Product>>>('/products', { params });
+    const res = await api.get<ApiResponse<PaginatedResponse<Product>>>(
+      "/products",
+      { params },
+    );
     return res.data.data;
   },
 
@@ -18,7 +29,7 @@ export const productsService = {
 
   // Buat product baru
   create: async (data: CreateProductRequest) => {
-    const res = await api.post<ApiResponse<Product>>('/products', data);
+    const res = await api.post<ApiResponse<Product>>("/products", data);
     return res.data.data;
   },
 

@@ -1,6 +1,6 @@
 // Header - tampilkan judul halaman & info user
-import { useAuthStore } from '../../store/authStore';
-import { User } from 'lucide-react';
+import { useAuthStore } from "../../store/authStore";
+import { User } from "lucide-react";
 
 interface HeaderProps {
   title: string; // Judul halaman
@@ -20,7 +20,7 @@ export default function Header({ title }: HeaderProps) {
           <User size={18} className="text-blue-600" />
         </div>
         <div className="text-sm">
-          <p className="font-medium text-gray-700">{user?.name || 'Admin'}</p>
+          <p className="font-medium text-gray-700">{user?.name || "Admin"}</p>
           <p className="text-gray-400 text-xs">{user?.email}</p>
         </div>
       </div>
