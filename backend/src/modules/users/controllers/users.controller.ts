@@ -13,7 +13,7 @@ export class UsersController {
   // GET /users/profile - ambil data profil user yang login
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Request() req) {
+  async getProfile(@Request() req: any) {
     return this.usersService.findById(req.user.id);
   }
 }

@@ -1,0 +1,495 @@
+{
+  "info": {
+    "name": "Admin Panel API",
+    "_postman_id": "admin-panel-api-collection",
+    "description": "Koleksi API untuk Admin Panel Management System - NestJS Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Endpoint autentikasi (login, register, profile)",
+      "item": [
+        {
+          "name": "1. Register - Daftar User Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin2@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"Admin Dua\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Daftarkan user baru ke sistem"
+          }
+        },
+        {
+          "name": "2. Login - Dapat Token JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Otomatis simpan token ke variable",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.accessToken) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.accessToken);",
+                  "    console.log('Token berhasil disimpan!');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login dan dapatkan JWT token. Token otomatis tersimpan."
+          }
+        },
+        {
+          "name": "3. Get Profile - Lihat Data User Login",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            },
+            "description": "Ambil data profil user yang sedang login (butuh token)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "description": "CRUD endpoint untuk Categories",
+      "item": [
+        {
+          "name": "1. Get All Categories - Semua Kategori",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["categories"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "", "disabled": true }
+              ]
+            },
+            "description": "Ambil semua kategori dengan pagination. Bisa tambah ?search=nama"
+          }
+        },
+        {
+          "name": "2. Get Category by ID - Detail Kategori",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/1",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "1"]
+            },
+            "description": "Ambil detail 1 kategori beserta products-nya"
+          }
+        },
+        {
+          "name": "3. Create Category - Buat Kategori Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Accessories\",\n  \"description\": \"Aksesoris gadget dan fashion\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"]
+            },
+            "description": "Buat kategori baru"
+          }
+        },
+        {
+          "name": "4. Update Category - Edit Kategori",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Accessories Updated\",\n  \"description\": \"Deskripsi yang diupdate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/categories/1",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "1"]
+            },
+            "description": "Update data kategori berdasarkan ID"
+          }
+        },
+        {
+          "name": "5. Delete Category - Hapus Kategori",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/6",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "6"]
+            },
+            "description": "Hapus kategori berdasarkan ID (cascade ke products)"
+          }
+        },
+        {
+          "name": "6. Search Categories - Cari Kategori",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories?search=electronics&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["categories"],
+              "query": [
+                { "key": "search", "value": "electronics" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Cari kategori berdasarkan nama"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "description": "CRUD endpoint untuk Products",
+      "item": [
+        {
+          "name": "1. Get All Products - Semua Produk",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "categoryId", "value": "", "disabled": true }
+              ]
+            },
+            "description": "Ambil semua produk dengan pagination. Bisa filter ?categoryId=1&search=nama"
+          }
+        },
+        {
+          "name": "2. Get Product by ID - Detail Produk",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/1",
+              "host": ["{{base_url}}"],
+              "path": ["products", "1"]
+            },
+            "description": "Ambil detail 1 produk beserta data kategori-nya"
+          }
+        },
+        {
+          "name": "3. Create Product - Buat Produk Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 1,\n  \"name\": \"Samsung Galaxy Tab S9\",\n  \"description\": \"Tablet Samsung terbaru\",\n  \"price\": 12000000,\n  \"stock\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "Buat produk baru (pastikan categoryId valid)"
+          }
+        },
+        {
+          "name": "4. Update Product - Edit Produk",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MacBook Pro M3 Max\",\n  \"price\": 30000000,\n  \"stock\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/1",
+              "host": ["{{base_url}}"],
+              "path": ["products", "1"]
+            },
+            "description": "Update data produk berdasarkan ID"
+          }
+        },
+        {
+          "name": "5. Delete Product - Hapus Produk",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/13",
+              "host": ["{{base_url}}"],
+              "path": ["products", "13"]
+            },
+            "description": "Hapus produk berdasarkan ID"
+          }
+        },
+        {
+          "name": "6. Search Products - Cari Produk",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products?search=macbook&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "search", "value": "macbook" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Cari produk berdasarkan nama"
+          }
+        },
+        {
+          "name": "7. Filter by Category - Produk per Kategori",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products?categoryId=1&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "categoryId", "value": "1" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Filter produk berdasarkan kategori"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error Testing",
+      "description": "Test error handling",
+      "item": [
+        {
+          "name": "1. Login Gagal - Password Salah",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Test login dengan password salah (expect 401)"
+          }
+        },
+        {
+          "name": "2. Tanpa Token - Unauthorized",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"]
+            },
+            "description": "Akses endpoint tanpa token (expect 401)"
+          }
+        },
+        {
+          "name": "3. Category Not Found - ID Tidak Ada",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/999",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "999"]
+            },
+            "description": "Akses kategori dengan ID yang tidak ada (expect 404)"
+          }
+        },
+        {
+          "name": "4. Validation Error - Body Kosong",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"]
+            },
+            "description": "Kirim body kosong untuk test validasi (expect 400)"
+          }
+        }
+      ]
+    }
+  ]
+}

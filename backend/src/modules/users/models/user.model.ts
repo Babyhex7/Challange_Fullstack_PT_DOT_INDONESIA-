@@ -15,45 +15,45 @@ export class User extends Model {
     primaryKey: true,
     autoIncrement: true,
   })
-  id: number;
+  declare id: number;
 
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
     unique: true,
   })
-  email: string;
+  declare email: string;
 
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  password: string;
+  declare password: string;
 
   @Column({
     type: DataType.STRING(100),
     allowNull: false,
   })
-  name: string;
+  declare name: string;
 
   @Column({
     type: DataType.ENUM('admin'),
     defaultValue: 'admin',
   })
-  role: string;
+  declare role: string;
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true,
     field: 'is_active',
   })
-  isActive: boolean;
+  declare isActive: boolean;
 
   @CreatedAt
   @Column({ field: 'created_at' })
-  createdAt: Date;
+  declare createdAt: Date;
 
   @UpdatedAt
   @Column({ field: 'updated_at' })
-  updatedAt: Date;
+  declare updatedAt: Date;
 }

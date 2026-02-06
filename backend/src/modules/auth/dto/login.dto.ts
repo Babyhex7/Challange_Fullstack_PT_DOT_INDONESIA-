@@ -8,6 +8,7 @@ export class LoginDto {
   @IsNotEmpty({ message: 'Email wajib diisi' })
   email: string;
 
+
   @ApiProperty({ example: 'password123' })
   @IsString()
   @IsNotEmpty({ message: 'Password wajib diisi' })
