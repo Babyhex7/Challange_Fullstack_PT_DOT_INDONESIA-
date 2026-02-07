@@ -3,7 +3,8 @@ import { useEffect, useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Search, Plus, Pencil, Trash2, X, FolderTree } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, X, FolderTree, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Header from "../components/layout/Header";
 import Pagination from "../components/ui/Pagination";
@@ -22,6 +23,8 @@ const categorySchema = z.object({
 type CategoryForm = z.infer<typeof categorySchema>;
 
 export default function CategoriesPage() {
+  const navigate = useNavigate();
+
   // State data & loading
   const [categories, setCategories] = useState<Category[]>([]);
   const [meta, setMeta] = useState<PaginationMeta>({
@@ -250,6 +253,13 @@ export default function CategoriesPage() {
                     </td>
                     <td className="py-4 px-5">
                       <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => navigate(`/categories/${cat.id}`)}
+                          className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+                          title="Detail"
+                        >
+                          <Eye size={15} />
+                        </button>
                         <button
                           onClick={() => openEdit(cat)}
                           className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"

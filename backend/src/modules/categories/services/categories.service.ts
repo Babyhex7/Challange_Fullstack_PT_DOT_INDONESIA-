@@ -1,5 +1,9 @@
 // Service Categories - logic bisnis CRUD categories
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Category } from '../models/category.model';
 import { Product } from '../../products/models/product.model';
@@ -22,9 +26,7 @@ export class CategoriesService {
     const offset = (page - 1) * limit;
 
     // Filter pencarian berdasarkan nama
-    const where = search
-      ? { name: { [Op.like]: `%${search}%` } }
-      : {};
+    const where = search ? { name: { [Op.like]: `%${search}%` } } : {};
 
     const { rows, count } = await this.categoryModel.findAndCountAll({
       where,
@@ -79,9 +81,18 @@ export class CategoriesService {
     return category.update(dto);
   }
 
-  // Hapus category
+  // Hapus category (cek dulu apakah ada products yang terkait)
   async remove(id: number) {
     const category = await this.findOne(id);
+
+    // Cek apakah masih ada products di category ini
+    const productCount = await Product.count({ where: { categoryId: id } });
+    if (productCount > 0) {
+      throw new ConflictException(
+        `Tidak bisa menghapus category "${category.name}" karena masih memiliki ${productCount} product(s). Hapus semua product di category ini terlebih dahulu.`,
+      );
+    }
+
     await category.destroy();
     return { message: 'Category berhasil dihapus' };
   }

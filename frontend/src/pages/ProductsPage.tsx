@@ -3,7 +3,17 @@ import { useEffect, useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Search, Plus, Pencil, Trash2, X, Filter, Package } from "lucide-react";
+import {
+  Search,
+  Plus,
+  Pencil,
+  Trash2,
+  X,
+  Filter,
+  Package,
+  Eye,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Header from "../components/layout/Header";
 import Pagination from "../components/ui/Pagination";
@@ -31,6 +41,8 @@ type ProductFormInput = z.input<typeof productSchema>;
 type ProductFormOutput = z.output<typeof productSchema>;
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
+
   // State data
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -329,6 +341,13 @@ export default function ProductsPage() {
                     </td>
                     <td className="py-4 px-5">
                       <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => navigate(`/products/${prod.id}`)}
+                          className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+                          title="Detail"
+                        >
+                          <Eye size={15} />
+                        </button>
                         <button
                           onClick={() => openEdit(prod)}
                           className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
