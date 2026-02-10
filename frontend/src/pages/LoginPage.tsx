@@ -235,27 +235,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Demo credentials */}
-          <div className="mt-8 bg-white rounded-2xl p-5 border border-gray-200/60 shadow-sm">
-            <p className="font-semibold text-gray-700 text-sm mb-2">
-              🔑 Demo Credentials
-            </p>
-            <div className="space-y-1.5 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-500">Email</span>
-                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-700 border border-gray-200/60">
-                  admin@example.com
-                </code>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gray-500">Password</span>
-                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-700 border border-gray-200/60">
-                  password123
-                </code>
-              </div>
-            </div>
-          </div>
-
           {/* Footer */}
           <p className="text-center text-xs text-gray-300 mt-8">
             &copy; 2026 Admin Panel. Built with React & NestJS.
