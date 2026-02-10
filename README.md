@@ -21,6 +21,17 @@ Aplikasi admin panel fullstack untuk mengelola data **Categories** dan **Product
 
 ---
 
+> **⚠️ PERINGATAN KEAMANAN**
+>
+> **JANGAN PERNAH commit file `.env` ke Git!** File ini berisi kredensial sensitif (password database, JWT secret, dll.).
+>
+> - Gunakan file `.env.example` sebagai template
+> - Setiap developer harus membuat file `.env` sendiri di lokal
+> - File `.env` sudah ada di `.gitignore`, pastikan tidak ter-commit
+> - **Jika sudah ter-commit:** Lihat panduan di [SECURITY.md](SECURITY.md) untuk menghapusnya dari Git history
+
+---
+
 ## Daftar Isi
 
 - [Screenshot](#screenshot)
