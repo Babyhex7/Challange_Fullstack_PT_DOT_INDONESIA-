@@ -1,8 +1,8 @@
 <div align="center">
 
-# Admin Panel - Product Management System
+# Admin Panel - Sistem Manajemen Produk
 
-A fullstack admin panel for managing **Categories** and **Products**, built with modern web technologies. Features JWT authentication, complete CRUD operations, search, pagination, and detailed view pages.
+Aplikasi admin panel fullstack untuk mengelola data **Categories** dan **Products**. Dibangun dengan teknologi web modern, dilengkapi autentikasi JWT, operasi CRUD lengkap, fitur pencarian, pagination, dan halaman detail.
 
 ![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
@@ -13,104 +13,104 @@ A fullstack admin panel for managing **Categories** and **Products**, built with
 
 <br />
 
-![App Preview](docs/screenshots/dashboard.png)
+![Preview Aplikasi](docs/screenshots/dashboard.png)
 
-[Features](#-features) · [Screenshots](#-screenshots) · [Getting Started](#-getting-started) · [API Docs](#-api-documentation) · [Architecture](#-architecture)
+[Fitur](#fitur) · [Screenshot](#screenshot) · [Cara Menjalankan](#cara-menjalankan) · [Dokumentasi API](#dokumentasi-api) · [Arsitektur](#arsitektur)
 
 </div>
 
 ---
 
-## Table of Contents
+## Daftar Isi
 
-- [Screenshots](#-screenshots)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Prerequisites](#-prerequisites)
-- [Getting Started](#-getting-started)
-  - [1. Clone the Repository](#1-clone-the-repository)
-  - [2. Database Setup](#2-database-setup)
-  - [3. Backend Setup](#3-backend-setup)
-  - [4. Frontend Setup](#4-frontend-setup)
-  - [5. Default Account](#5-default-account)
-- [Project Structure](#-project-structure)
-- [API Documentation](#-api-documentation)
-  - [Authentication](#authentication)
+- [Screenshot](#screenshot)
+- [Fitur](#fitur)
+- [Tech Stack](#tech-stack)
+- [Prasyarat](#prasyarat)
+- [Cara Menjalankan](#cara-menjalankan)
+  - [1. Clone Repository](#1-clone-repository)
+  - [2. Setup Database](#2-setup-database)
+  - [3. Setup Backend](#3-setup-backend)
+  - [4. Setup Frontend](#4-setup-frontend)
+  - [5. Akun Default](#5-akun-default)
+- [Struktur Projek](#struktur-projek)
+- [Dokumentasi API](#dokumentasi-api)
+  - [Autentikasi](#autentikasi)
   - [Categories](#categories)
   - [Products](#products)
   - [Query Parameters](#query-parameters)
-  - [Response Format](#response-format)
-- [Architecture](#-architecture)
-  - [Backend (MVC Pattern)](#backend-mvc-pattern)
-  - [Frontend Architecture](#frontend-architecture)
-  - [Database Design](#database-design)
-- [Error Handling](#-error-handling)
-- [Dependencies](#-dependencies)
-- [Environment Variables](#-environment-variables)
-- [Available Scripts](#-available-scripts)
-- [Deployment Notes](#-deployment-notes)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
+  - [Format Response](#format-response)
+- [Arsitektur](#arsitektur)
+  - [Backend (Pola MVC)](#backend-pola-mvc)
+  - [Frontend](#arsitektur-frontend)
+  - [Desain Database](#desain-database)
+- [Penanganan Error](#penanganan-error)
+- [Dependencies](#dependencies)
+- [Environment Variables](#environment-variables)
+- [Script yang Tersedia](#script-yang-tersedia)
+- [Catatan Deployment](#catatan-deployment)
+- [Troubleshooting](#troubleshooting)
+- [Kontribusi](#kontribusi)
+- [Lisensi](#lisensi)
 
 ---
 
-## Screenshots
+## Screenshot
 
-### Login Page
+### Halaman Login
 
-The login page features a modern split-layout design — a branding illustration on the left and a clean login form on the right. Form validation is handled client-side with Zod before any request is sent.
+Halaman login menampilkan desain split-layout yang modern — ilustrasi branding di sebelah kiri dan form login yang bersih di sebelah kanan. Validasi form dilakukan di sisi client menggunakan Zod sebelum request dikirim ke server.
 
-![Login Page](docs/screenshots/login.png)
+![Halaman Login](docs/screenshots/login.png)
 
 ### Dashboard
 
-The dashboard provides a quick overview with statistics cards showing total categories, total products, admin users count, and API status. Clean card-based layout with gradient accents and quick navigation buttons.
+Dashboard menampilkan ringkasan data dengan kartu statistik yang menunjukkan total categories, total products, jumlah admin users, dan status API. Desain berbasis kartu dengan aksen gradien dan tombol navigasi cepat.
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
 ---
 
-## Features
+## Fitur
 
-### Authentication & Security
+### Autentikasi & Keamanan
 
-- JWT-based authentication with configurable expiration
-- Password hashing with bcrypt (10 salt rounds)
-- Protected routes — all admin pages require a valid token
-- Automatic redirect to login when the token expires
-- Passport.js strategy integration for extensibility
+- Autentikasi berbasis JWT dengan waktu kadaluarsa yang dapat dikonfigurasi
+- Password di-hash menggunakan bcrypt (10 salt rounds)
+- Protected routes — semua halaman admin membutuhkan token valid
+- Redirect otomatis ke halaman login ketika token kadaluarsa
+- Integrasi Passport.js strategy untuk kemudahan pengembangan
 
 ### Categories (CRUD)
 
-- List all categories with server-side pagination and search
-- View category detail with the list of products under it
-- Create new categories via a validated modal form
-- Edit existing categories inline
-- Delete categories with a safety check — cannot delete if products still reference it
+- Menampilkan daftar categories dengan pagination dan pencarian
+- Melihat detail category beserta daftar products di dalamnya
+- Membuat category baru melalui form modal dengan validasi
+- Mengedit category yang sudah ada
+- Menghapus category dengan pengecekan — tidak bisa dihapus jika masih memiliki products
 
 ### Products (CRUD)
 
-- List products with pagination, search by name, and filter by category
-- View product detail with price, stock, description, and parent category link
-- Create/edit products with form validation (name, category, price, stock)
-- Automatic Rupiah currency formatting for prices
-- Delete products with a confirmation modal
+- Menampilkan daftar products dengan pagination, pencarian nama, dan filter berdasarkan category
+- Melihat detail product dengan info harga, stok, deskripsi, dan link ke category
+- Membuat/mengedit products dengan validasi form (nama, category, harga, stok)
+- Format harga otomatis ke format Rupiah
+- Menghapus products dengan modal konfirmasi
 
-### User Experience
+### Pengalaman Pengguna
 
-- Loading skeletons while data is being fetched
-- Toast notifications for every user action (success/error)
-- Fully responsive layout (mobile, tablet, desktop)
-- Modern rounded UI design with gradient accents
-- React Error Boundary to gracefully handle unexpected crashes
-- Smooth sidebar navigation with active route highlighting
+- Loading skeleton saat data sedang dimuat
+- Notifikasi toast untuk setiap aksi pengguna (sukses/error)
+- Layout responsif (mobile, tablet, desktop)
+- Desain UI modern dengan sudut rounded dan aksen gradien
+- React Error Boundary untuk menangani crash yang tidak terduga
+- Navigasi sidebar yang smooth dengan highlight route aktif
 
 ---
 
 ## Tech Stack
 
-| Layer        | Technology                                                                        |
+| Layer        | Teknologi                                                                         |
 | ------------ | --------------------------------------------------------------------------------- |
 | **Frontend** | React 19, TypeScript, Vite 7, TailwindCSS 4, Zustand, Axios, React Hook Form, Zod |
 | **Backend**  | NestJS 11, TypeScript, Sequelize ORM, Passport JWT, Swagger (OpenAPI)             |
@@ -118,87 +118,87 @@ The dashboard provides a quick overview with statistics cards showing total cate
 
 ---
 
-## Prerequisites
+## Prasyarat
 
-Before you begin, make sure you have the following installed on your machine:
+Sebelum memulai, pastikan software berikut sudah terinstal di komputer kamu:
 
-| Software    | Minimum Version | Download Link                                 |
-| ----------- | --------------: | --------------------------------------------- |
-| **Node.js** |            18.x | [nodejs.org](https://nodejs.org/)             |
-| **npm**     |             9.x | Comes with Node.js                            |
-| **MySQL**   |             8.0 | [mysql.com](https://dev.mysql.com/downloads/) |
-| **Git**     |             2.x | [git-scm.com](https://git-scm.com/)           |
+| Software    | Versi Minimum | Link Download                                 |
+| ----------- | ------------: | --------------------------------------------- |
+| **Node.js** |          18.x | [nodejs.org](https://nodejs.org/)             |
+| **npm**     |           9.x | Sudah termasuk dalam Node.js                  |
+| **MySQL**   |           8.0 | [mysql.com](https://dev.mysql.com/downloads/) |
+| **Git**     |           2.x | [git-scm.com](https://git-scm.com/)           |
 
-You can verify your installation by running:
+Verifikasi instalasi dengan menjalankan perintah berikut:
 
 ```bash
-node -v    # Should print v18.x.x or higher
-npm -v     # Should print 9.x.x or higher
+node -v    # Harus menampilkan v18.x.x atau lebih tinggi
+npm -v     # Harus menampilkan 9.x.x atau lebih tinggi
 mysql --version
 git --version
 ```
 
 ---
 
-## Getting Started
+## Cara Menjalankan
 
-### 1. Clone the Repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/your-username/admin-panel.git
 cd admin-panel
 ```
 
-### 2. Database Setup
+### 2. Setup Database
 
-Open your MySQL client (MySQL Workbench, terminal, or any GUI) and create the database:
+Buka MySQL client (MySQL Workbench, terminal, atau GUI lainnya) dan buat database:
 
 ```sql
 CREATE DATABASE admin_panel;
 ```
 
-> The tables will be created automatically when you start the backend server — Sequelize handles the synchronization based on the model definitions.
+> Tabel akan dibuat secara otomatis saat server backend dijalankan — Sequelize akan menyinkronkan tabel berdasarkan definisi model.
 
-### 3. Backend Setup
+### 3. Setup Backend
 
 ```bash
-# Navigate to the backend directory
+# Masuk ke direktori backend
 cd backend
 
-# Install all dependencies
+# Install semua dependencies
 npm install
 
-# Create your environment file
+# Buat file environment
 cp .env.example .env
 ```
 
-Now open the `.env` file and fill in your database credentials:
+Sekarang buka file `.env` dan isi kredensial database kamu:
 
 ```env
-# Database Configuration
+# Konfigurasi Database
 DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
-DB_PASSWORD=your_mysql_password
+DB_PASSWORD=password_mysql_kamu
 DB_NAME=admin_panel
 
-# JWT Configuration
-JWT_SECRET=your_super_secret_key_here
+# Konfigurasi JWT
+JWT_SECRET=secret_key_kamu_yang_panjang_dan_aman
 JWT_EXPIRES_IN=24h
 
 # Server
 PORT=3001
 ```
 
-> **Important:** Change `JWT_SECRET` to a strong, random string in production. Never commit your `.env` file to version control.
+> **Penting:** Ganti `JWT_SECRET` dengan string acak yang kuat di production. Jangan pernah commit file `.env` ke version control.
 
-Start the development server:
+Jalankan server development:
 
 ```bash
 npm run start:dev
 ```
 
-If everything is set up correctly, you'll see:
+Jika semua sudah benar, kamu akan melihat output:
 
 ```
 Server berjalan di http://localhost:3001
@@ -208,57 +208,57 @@ Swagger docs di http://localhost:3001/api/docs
 ✅ Seeder: Products berhasil dibuat
 ```
 
-The backend is now running at **http://localhost:3001** and the Swagger documentation is available at **http://localhost:3001/api/docs**.
+Backend sekarang berjalan di **http://localhost:3001** dan dokumentasi Swagger tersedia di **http://localhost:3001/api/docs**.
 
-### 4. Frontend Setup
+### 4. Setup Frontend
 
-Open a new terminal window:
+Buka terminal baru:
 
 ```bash
-# Navigate to the frontend directory
+# Masuk ke direktori frontend
 cd frontend
 
-# Install all dependencies
+# Install semua dependencies
 npm install
 
-# Start the development server
+# Jalankan server development
 npm run dev
 ```
 
-The frontend is now running at **http://localhost:5173**. Open this URL in your browser.
+Frontend sekarang berjalan di **http://localhost:5173**. Buka URL ini di browser kamu.
 
-### 5. Default Account
+### 5. Akun Default
 
-When the backend starts for the first time, it automatically seeds the database with a default admin account and sample data (5 categories and 13 products):
+Saat backend pertama kali dijalankan, seeder otomatis membuat akun admin default beserta data contoh (5 categories dan 13 products):
 
-| Field    | Value               |
+| Field    | Nilai               |
 | -------- | ------------------- |
 | Email    | `admin@example.com` |
 | Password | `password123`       |
 
-Use these credentials to log in and explore the application.
+Gunakan kredensial ini untuk login dan menjelajahi aplikasi.
 
 ---
 
-## Project Structure
+## Struktur Projek
 
 ```
 .
-├── backend/                    # NestJS API server
+├── backend/                    # Server API NestJS
 │   ├── src/
-│   │   ├── main.ts             # Entry point, bootstrap, Swagger setup
+│   │   ├── main.ts             # Entry point, bootstrap, setup Swagger
 │   │   ├── app.module.ts       # Root module
-│   │   ├── common/             # Shared utilities
+│   │   ├── common/             # Utilitas bersama
 │   │   │   ├── filters/        # Global exception filter
 │   │   │   ├── guards/         # JWT authentication guard
 │   │   │   └── interceptors/   # Response transformation interceptor
-│   │   ├── config/             # Database & JWT configuration
+│   │   ├── config/             # Konfigurasi Database & JWT
 │   │   ├── database/           # Database module & seeders
 │   │   └── modules/
-│   │       ├── auth/           # Authentication (login, register, JWT)
-│   │       ├── categories/     # Categories CRUD module
-│   │       ├── products/       # Products CRUD module
-│   │       └── users/          # User management module
+│   │       ├── auth/           # Autentikasi (login, register, JWT)
+│   │       ├── categories/     # Module CRUD Categories
+│   │       ├── products/       # Module CRUD Products
+│   │       └── users/          # Module manajemen User
 │   ├── test/                   # E2E tests
 │   ├── package.json
 │   └── tsconfig.json
@@ -266,43 +266,43 @@ Use these credentials to log in and explore the application.
 ├── frontend/                   # React SPA
 │   ├── src/
 │   │   ├── main.tsx            # React entry point
-│   │   ├── App.tsx             # Router & layout setup
+│   │   ├── App.tsx             # Setup Router & layout
 │   │   ├── components/
-│   │   │   ├── auth/           # ProtectedRoute component
+│   │   │   ├── auth/           # Komponen ProtectedRoute
 │   │   │   ├── layout/         # Header, Sidebar, MainLayout
-│   │   │   └── ui/             # Reusable UI (Pagination, DeleteModal)
-│   │   ├── pages/              # Page components (Dashboard, CRUD pages)
-│   │   ├── services/           # API service layer (Axios calls)
+│   │   │   └── ui/             # UI reusable (Pagination, DeleteModal)
+│   │   ├── pages/              # Komponen halaman (Dashboard, CRUD pages)
+│   │   ├── services/           # Layer service API (panggilan Axios)
 │   │   ├── store/              # Zustand state management
-│   │   ├── types/              # TypeScript type definitions
-│   │   └── utils/              # Utility functions
+│   │   ├── types/              # Definisi tipe TypeScript
+│   │   └── utils/              # Fungsi utilitas
 │   ├── package.json
 │   └── vite.config.ts
 │
 ├── docs/
 │   ├── api/                    # Postman collection
-│   └── screenshots/            # Application screenshots
+│   └── screenshots/            # Screenshot aplikasi
 │
 └── README.md
 ```
 
 ---
 
-## API Documentation
+## Dokumentasi API
 
-The API follows RESTful conventions and uses a versioned prefix `/api/v1`. All responses are wrapped in a standard format (see [Response Format](#response-format)).
+API mengikuti konvensi RESTful dan menggunakan prefix versi `/api/v1`. Semua response dibungkus dalam format standar (lihat [Format Response](#format-response)).
 
-Interactive Swagger documentation is available at **http://localhost:3001/api/docs** while the server is running. You can also import the Postman collection from `docs/api/postman_collection.json`.
+Dokumentasi Swagger interaktif tersedia di **http://localhost:3001/api/docs** saat server berjalan. Kamu juga bisa mengimpor Postman collection dari `docs/api/postman_collection.json`.
 
-### Authentication
+### Autentikasi
 
-| Method | Endpoint                | Auth | Description                                    |
-| ------ | ----------------------- | ---- | ---------------------------------------------- |
-| POST   | `/api/v1/auth/login`    | No   | Login with email & password, returns JWT token |
-| POST   | `/api/v1/auth/register` | No   | Register a new user account                    |
-| GET    | `/api/v1/auth/profile`  | JWT  | Get the currently authenticated user's profile |
+| Method | Endpoint                | Auth | Deskripsi                                       |
+| ------ | ----------------------- | ---- | ----------------------------------------------- |
+| POST   | `/api/v1/auth/login`    | Tidak| Login dengan email & password, mengembalikan token JWT |
+| POST   | `/api/v1/auth/register` | Tidak| Mendaftarkan akun user baru                     |
+| GET    | `/api/v1/auth/profile`  | JWT  | Mendapatkan profil user yang sedang login       |
 
-**Login Example:**
+**Contoh Login:**
 
 ```bash
 curl -X POST http://localhost:3001/api/v1/auth/login \
@@ -328,7 +328,7 @@ curl -X POST http://localhost:3001/api/v1/auth/login \
 }
 ```
 
-Use the returned `access_token` as a Bearer token in subsequent requests:
+Gunakan `access_token` yang dikembalikan sebagai Bearer token di request selanjutnya:
 
 ```bash
 curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
@@ -337,34 +337,34 @@ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
 
 ### Categories
 
-| Method | Endpoint                 | Auth | Description                 |
-| ------ | ------------------------ | ---- | --------------------------- |
-| GET    | `/api/v1/categories`     | JWT  | List categories (paginated) |
-| GET    | `/api/v1/categories/:id` | JWT  | Get category detail         |
-| POST   | `/api/v1/categories`     | JWT  | Create a new category       |
-| PATCH  | `/api/v1/categories/:id` | JWT  | Update an existing category |
-| DELETE | `/api/v1/categories/:id` | JWT  | Delete a category           |
+| Method | Endpoint                 | Auth | Deskripsi                        |
+| ------ | ------------------------ | ---- | -------------------------------- |
+| GET    | `/api/v1/categories`     | JWT  | Daftar categories (dengan pagination) |
+| GET    | `/api/v1/categories/:id` | JWT  | Detail category                  |
+| POST   | `/api/v1/categories`     | JWT  | Membuat category baru            |
+| PATCH  | `/api/v1/categories/:id` | JWT  | Mengupdate category              |
+| DELETE | `/api/v1/categories/:id` | JWT  | Menghapus category               |
 
-**Create Category Example:**
+**Contoh Membuat Category:**
 
 ```bash
 curl -X POST http://localhost:3001/api/v1/categories \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
-  -d '{"name": "Furniture", "description": "Home and office furniture"}'
+  -d '{"name": "Furniture", "description": "Furniture rumah dan kantor"}'
 ```
 
 ### Products
 
-| Method | Endpoint               | Auth | Description                |
-| ------ | ---------------------- | ---- | -------------------------- |
-| GET    | `/api/v1/products`     | JWT  | List products (paginated)  |
-| GET    | `/api/v1/products/:id` | JWT  | Get product detail         |
-| POST   | `/api/v1/products`     | JWT  | Create a new product       |
-| PATCH  | `/api/v1/products/:id` | JWT  | Update an existing product |
-| DELETE | `/api/v1/products/:id` | JWT  | Delete a product           |
+| Method | Endpoint               | Auth | Deskripsi                         |
+| ------ | ---------------------- | ---- | --------------------------------- |
+| GET    | `/api/v1/products`     | JWT  | Daftar products (dengan pagination) |
+| GET    | `/api/v1/products/:id` | JWT  | Detail product                    |
+| POST   | `/api/v1/products`     | JWT  | Membuat product baru              |
+| PATCH  | `/api/v1/products/:id` | JWT  | Mengupdate product                |
+| DELETE | `/api/v1/products/:id` | JWT  | Menghapus product                 |
 
-**Create Product Example:**
+**Contoh Membuat Product:**
 
 ```bash
 curl -X POST http://localhost:3001/api/v1/products \
@@ -375,34 +375,34 @@ curl -X POST http://localhost:3001/api/v1/products \
     "categoryId": 1,
     "price": 3500000,
     "stock": 10,
-    "description": "Adjustable height standing desk"
+    "description": "Meja berdiri dengan tinggi yang bisa disesuaikan"
   }'
 ```
 
 ### Query Parameters
 
-For all list endpoints (`GET /categories`, `GET /products`):
+Untuk semua endpoint list (`GET /categories`, `GET /products`):
 
-| Parameter    | Type   | Default | Description                                 |
-| ------------ | ------ | ------- | ------------------------------------------- |
-| `page`       | number | 1       | Page number for pagination                  |
-| `limit`      | number | 10      | Number of items per page                    |
-| `search`     | string | —       | Search keyword (filters by name)            |
-| `categoryId` | number | —       | Filter products by category (products only) |
+| Parameter    | Tipe   | Default | Deskripsi                                    |
+| ------------ | ------ | ------- | -------------------------------------------- |
+| `page`       | number | 1       | Nomor halaman untuk pagination               |
+| `limit`      | number | 10      | Jumlah item per halaman                      |
+| `search`     | string | —       | Kata kunci pencarian (filter berdasarkan nama) |
+| `categoryId` | number | —       | Filter products berdasarkan category (hanya di products) |
 
-**Example:**
+**Contoh:**
 
 ```bash
-# Get page 2 of products, 5 per page, filtered by category 1
+# Ambil halaman 2 dari products, 5 per halaman, filter category 1
 curl "http://localhost:3001/api/v1/products?page=2&limit=5&categoryId=1" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-### Response Format
+### Format Response
 
-All API responses follow a consistent structure:
+Semua response API mengikuti struktur yang konsisten:
 
-**Success Response:**
+**Response Sukses:**
 
 ```json
 {
@@ -420,7 +420,7 @@ All API responses follow a consistent structure:
 }
 ```
 
-**Error Response:**
+**Response Error:**
 
 ```json
 {
@@ -434,49 +434,49 @@ All API responses follow a consistent structure:
 
 ---
 
-## Architecture
+## Arsitektur
 
-### Backend (MVC Pattern)
+### Backend (Pola MVC)
 
-The backend follows the **MVC (Model-View-Controller)** pattern adapted for NestJS:
+Backend mengikuti pola **MVC (Model-View-Controller)** yang diadaptasi untuk NestJS:
 
 ```
 backend/src/modules/{module}/
-├── controllers/    → Controller  : Handles HTTP requests, delegates to services
-├── services/       → Service     : Contains business logic, database queries
-├── models/         → Model       : Sequelize model (table definition, relations)
-├── dto/            → DTO         : Data Transfer Objects for input validation
+├── controllers/    → Controller  : Menangani request HTTP, delegasi ke services
+├── services/       → Service     : Berisi business logic, query database
+├── models/         → Model       : Model Sequelize (definisi tabel, relasi)
+├── dto/            → DTO         : Data Transfer Objects untuk validasi input
 ```
 
-- **Model** — Defines the database table structure using Sequelize decorators (`@Table`, `@Column`, `@HasMany`, `@BelongsTo`). Each model maps directly to a MySQL table.
-- **Controller** — The entry point for HTTP requests. Controllers parse the request, call the appropriate service method, and return the response. They contain no business logic.
-- **Service** — All business logic lives here. Services interact with models to query the database, enforce business rules (e.g., "cannot delete a category with products"), and transform data.
-- **DTO** — Validates incoming request data using `class-validator` decorators. Invalid requests are rejected before reaching the controller.
-- **View** — In this fullstack architecture, the "View" is the React frontend, which consumes the REST API.
+- **Model** — Mendefinisikan struktur tabel database menggunakan decorator Sequelize (`@Table`, `@Column`, `@HasMany`, `@BelongsTo`). Setiap model dipetakan langsung ke tabel MySQL.
+- **Controller** — Entry point untuk request HTTP. Controller mem-parse request, memanggil method service yang sesuai, dan mengembalikan response. Controller tidak mengandung business logic.
+- **Service** — Semua business logic ada di sini. Service berinteraksi dengan model untuk query database, menerapkan aturan bisnis (contoh: "tidak bisa hapus category yang masih punya products"), dan transformasi data.
+- **DTO** — Memvalidasi data request menggunakan decorator `class-validator`. Request yang tidak valid akan ditolak sebelum mencapai controller.
+- **View** — Dalam arsitektur fullstack ini, "View" adalah frontend React yang mengkonsumsi REST API.
 
-### Frontend Architecture
+### Arsitektur Frontend
 
 ```
 frontend/src/
-├── pages/          → Page-level components (one per route)
-├── components/     → Reusable UI components
-├── services/       → API service layer (Axios HTTP calls)
-├── store/          → Zustand store (global auth state)
-├── types/          → TypeScript interfaces & types
-└── utils/          → Helper functions (error parsing, etc.)
+├── pages/          → Komponen level halaman (satu per route)
+├── components/     → Komponen UI yang reusable
+├── services/       → Layer service API (panggilan HTTP Axios)
+├── store/          → Zustand store (state auth global)
+├── types/          → Interface & tipe TypeScript
+└── utils/          → Fungsi helper (parsing error, dll.)
 ```
 
-Key patterns used:
+Pola-pola utama yang digunakan:
 
-- **Zustand** for lightweight global state (authentication token, user info)
-- **React Hook Form + Zod** for type-safe form validation
-- **Axios interceptors** for automatic token injection and 401 handling
-- **React Error Boundary** as a last-resort crash handler
-- **Service layer abstraction** — components never call Axios directly
+- **Zustand** untuk global state yang ringan (token autentikasi, info user)
+- **React Hook Form + Zod** untuk validasi form yang type-safe
+- **Axios interceptors** untuk injeksi token otomatis dan penanganan 401
+- **React Error Boundary** sebagai penanganan crash terakhir
+- **Abstraksi layer service** — komponen tidak pernah memanggil Axios secara langsung
 
-### Database Design
+### Desain Database
 
-The application uses three tables with the following relationships:
+Aplikasi menggunakan tiga tabel dengan relasi berikut:
 
 ```
 ┌──────────────────────┐         ┌──────────────────────────┐
@@ -509,189 +509,189 @@ The application uses three tables with the following relationships:
 └──────────────────────┘
 ```
 
-**Relationships:**
+**Relasi:**
 
-- `categories` → `products` : **One-to-Many** (1 category has many products, 1 product belongs to 1 category)
-- Foreign key: `products.category_id` references `categories.id`
+- `categories` → `products` : **One-to-Many** (1 category memiliki banyak products, 1 product hanya milik 1 category)
+- Foreign key: `products.category_id` mereferensi `categories.id`
 
 ---
 
-## Error Handling
+## Penanganan Error
 
-The application implements multi-layer error handling on both sides:
+Aplikasi menerapkan penanganan error berlapis di kedua sisi:
 
-### Backend Error Layers
+### Layer Error Backend
 
-| Layer                       | What It Does                                                                                   |
-| --------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Global Exception Filter** | Catches all unhandled exceptions and formats them into a consistent JSON response              |
-| **ValidationPipe**          | Automatically validates incoming DTOs using `class-validator` decorators                       |
-| **Service Layer**           | Throws specific exceptions (`NotFoundException`, `ConflictException`, `UnauthorizedException`) |
-| **Database Error Handler**  | Catches Sequelize-specific errors (unique constraint, foreign key, connection)                 |
+| Layer                       | Fungsi                                                                                        |
+| --------------------------- | --------------------------------------------------------------------------------------------- |
+| **Global Exception Filter** | Menangkap semua exception yang tidak tertangani dan memformatnya menjadi response JSON standar |
+| **ValidationPipe**          | Validasi otomatis DTO yang masuk menggunakan decorator `class-validator`                      |
+| **Service Layer**           | Melempar exception spesifik (`NotFoundException`, `ConflictException`, `UnauthorizedException`) |
+| **Database Error Handler**  | Menangkap error spesifik Sequelize (unique constraint, foreign key, koneksi)                  |
 
-### Frontend Error Layers
+### Layer Error Frontend
 
-| Layer                   | What It Does                                                                    |
+| Layer                   | Fungsi                                                                          |
 | ----------------------- | ------------------------------------------------------------------------------- |
-| **Error Boundary**      | React component that catches rendering crashes and shows a fallback UI          |
-| **Axios Interceptor**   | Automatically redirects to the login page on 401 (Unauthorized) responses       |
-| **`getErrorMessage()`** | Utility function that extracts human-readable error messages from API responses |
-| **Toast Notifications** | Provides immediate visual feedback for every user action                        |
-| **Form Validation**     | Client-side validation using Zod schemas prevents invalid submissions           |
+| **Error Boundary**      | Komponen React yang menangkap crash render dan menampilkan fallback UI          |
+| **Axios Interceptor**   | Otomatis redirect ke halaman login saat menerima response 401 (Unauthorized)    |
+| **`getErrorMessage()`** | Fungsi utilitas yang mengekstrak pesan error yang mudah dibaca dari response API |
+| **Toast Notifications** | Memberikan feedback visual langsung untuk setiap aksi user                      |
+| **Form Validation**     | Validasi client-side menggunakan schema Zod mencegah submission yang tidak valid |
 
 ---
 
 ## Dependencies
 
-### Backend Dependencies
+### Dependencies Backend
 
-| Package                | Purpose                                               |
+| Package                | Kegunaan                                              |
 | ---------------------- | ----------------------------------------------------- |
-| `@nestjs/core`         | Core NestJS framework                                 |
-| `@nestjs/config`       | Environment variable management via `.env` files      |
-| `@nestjs/jwt`          | JWT token generation and verification                 |
-| `@nestjs/passport`     | Passport.js integration for authentication strategies |
-| `@nestjs/sequelize`    | Sequelize ORM integration with NestJS                 |
-| `@nestjs/swagger`      | Auto-generated OpenAPI/Swagger documentation          |
-| `sequelize`            | SQL ORM for querying MySQL                            |
-| `sequelize-typescript` | TypeScript decorators for Sequelize models            |
-| `mysql2`               | MySQL database driver                                 |
-| `bcrypt`               | Secure password hashing                               |
-| `class-validator`      | DTO validation decorators                             |
-| `class-transformer`    | Automatic type transformation for DTOs                |
-| `passport-jwt`         | JWT extraction and verification strategy              |
+| `@nestjs/core`         | Framework utama NestJS                                |
+| `@nestjs/config`       | Manajemen environment variable via file `.env`        |
+| `@nestjs/jwt`          | Generate dan verifikasi token JWT                     |
+| `@nestjs/passport`     | Integrasi Passport.js untuk strategi autentikasi      |
+| `@nestjs/sequelize`    | Integrasi Sequelize ORM dengan NestJS                 |
+| `@nestjs/swagger`      | Dokumentasi Swagger/OpenAPI otomatis                  |
+| `sequelize`            | SQL ORM untuk query MySQL                             |
+| `sequelize-typescript` | Decorator TypeScript untuk model Sequelize            |
+| `mysql2`               | Driver database MySQL                                 |
+| `bcrypt`               | Hashing password yang aman                            |
+| `class-validator`      | Decorator validasi DTO                                |
+| `class-transformer`    | Transformasi tipe otomatis untuk DTO                  |
+| `passport-jwt`         | Strategi ekstraksi dan verifikasi JWT                 |
 
-### Frontend Dependencies
+### Dependencies Frontend
 
-| Package               | Purpose                                          |
+| Package               | Kegunaan                                         |
 | --------------------- | ------------------------------------------------ |
-| `react` (v19)         | UI library                                       |
-| `react-router-dom`    | Client-side routing and navigation               |
-| `axios`               | HTTP client for API communication                |
-| `zustand`             | Lightweight global state management              |
-| `react-hook-form`     | Performant form handling with minimal re-renders |
-| `zod`                 | TypeScript-first schema validation               |
-| `@hookform/resolvers` | Connects Zod schemas to React Hook Form          |
-| `tailwindcss` (v4)    | Utility-first CSS framework                      |
-| `lucide-react`        | Modern icon library (Feather-based)              |
-| `react-hot-toast`     | Lightweight toast notifications                  |
+| `react` (v19)         | Library UI                                       |
+| `react-router-dom`    | Routing dan navigasi client-side                 |
+| `axios`               | HTTP client untuk komunikasi API                 |
+| `zustand`             | State management global yang ringan              |
+| `react-hook-form`     | Penanganan form yang performant dengan re-render minimal |
+| `zod`                 | Validasi schema TypeScript-first                 |
+| `@hookform/resolvers` | Menghubungkan schema Zod ke React Hook Form      |
+| `tailwindcss` (v4)    | CSS framework utility-first                      |
+| `lucide-react`        | Library ikon modern (berbasis Feather)           |
+| `react-hot-toast`     | Notifikasi toast yang ringan                     |
 
 ---
 
 ## Environment Variables
 
-Create a `.env` file in the `backend/` directory:
+Buat file `.env` di direktori `backend/`:
 
-| Variable         | Required | Default       | Description                         |
-| ---------------- | -------- | ------------- | ----------------------------------- |
-| `DB_HOST`        | Yes      | `localhost`   | MySQL server hostname               |
-| `DB_PORT`        | Yes      | `3306`        | MySQL server port                   |
-| `DB_USERNAME`    | Yes      | `root`        | MySQL username                      |
-| `DB_PASSWORD`    | Yes      | —             | MySQL password                      |
-| `DB_NAME`        | Yes      | `admin_panel` | MySQL database name                 |
-| `JWT_SECRET`     | Yes      | —             | Secret key for signing JWT tokens   |
-| `JWT_EXPIRES_IN` | No       | `24h`         | Token expiration (e.g., `1h`, `7d`) |
-| `PORT`           | No       | `3001`        | Backend server port                 |
+| Variable         | Wajib | Default       | Deskripsi                           |
+| ---------------- | ----- | ------------- | ----------------------------------- |
+| `DB_HOST`        | Ya    | `localhost`   | Hostname server MySQL               |
+| `DB_PORT`        | Ya    | `3306`        | Port server MySQL                   |
+| `DB_USERNAME`    | Ya    | `root`        | Username MySQL                      |
+| `DB_PASSWORD`    | Ya    | —             | Password MySQL                      |
+| `DB_NAME`        | Ya    | `admin_panel` | Nama database MySQL                 |
+| `JWT_SECRET`     | Ya    | —             | Secret key untuk signing token JWT  |
+| `JWT_EXPIRES_IN` | Tidak | `24h`         | Waktu kadaluarsa token (contoh: `1h`, `7d`) |
+| `PORT`           | Tidak | `3001`        | Port server backend                 |
 
 ---
 
-## Available Scripts
+## Script yang Tersedia
 
 ### Backend (`cd backend`)
 
-| Command              | Description                                       |
+| Command              | Deskripsi                                         |
 | -------------------- | ------------------------------------------------- |
-| `npm run start:dev`  | Start in development mode with hot-reload (watch) |
-| `npm run start`      | Start in standard mode                            |
-| `npm run start:prod` | Start from compiled `dist/` (production)          |
-| `npm run build`      | Compile TypeScript to JavaScript                  |
-| `npm run lint`       | Run ESLint with auto-fix                          |
-| `npm run test`       | Run unit tests with Jest                          |
-| `npm run test:e2e`   | Run end-to-end tests                              |
-| `npm run test:cov`   | Run tests with coverage report                    |
-| `npm run format`     | Format code with Prettier                         |
+| `npm run start:dev`  | Jalankan dalam mode development dengan hot-reload |
+| `npm run start`      | Jalankan dalam mode standar                       |
+| `npm run start:prod` | Jalankan dari folder `dist/` yang sudah dicompile |
+| `npm run build`      | Compile TypeScript ke JavaScript                  |
+| `npm run lint`       | Jalankan ESLint dengan auto-fix                   |
+| `npm run test`       | Jalankan unit test dengan Jest                    |
+| `npm run test:e2e`   | Jalankan end-to-end tests                         |
+| `npm run test:cov`   | Jalankan test dengan laporan coverage             |
+| `npm run format`     | Format kode dengan Prettier                       |
 
 ### Frontend (`cd frontend`)
 
-| Command           | Description                            |
-| ----------------- | -------------------------------------- |
-| `npm run dev`     | Start Vite development server with HMR |
-| `npm run build`   | Type-check and build for production    |
-| `npm run preview` | Preview the production build locally   |
-| `npm run lint`    | Run ESLint                             |
+| Command           | Deskripsi                                  |
+| ----------------- | ------------------------------------------ |
+| `npm run dev`     | Jalankan Vite development server dengan HMR |
+| `npm run build`   | Type-check dan build untuk production      |
+| `npm run preview` | Preview build production secara lokal      |
+| `npm run lint`    | Jalankan ESLint                            |
 
 ---
 
-## Deployment Notes
+## Catatan Deployment
 
-Here are some important things to keep in mind when deploying to production:
+Berikut beberapa hal penting yang perlu diperhatikan saat deploy ke production:
 
-1. **Disable database auto-sync.** In `backend/src/config/database.config.ts`, change `synchronize: true` to `false`. Use proper Sequelize migrations instead of auto-sync in production to prevent accidental data loss.
+1. **Matikan auto-sync database.** Di `backend/src/config/database.config.ts`, ubah `synchronize: true` menjadi `false`. Gunakan migration Sequelize yang proper daripada auto-sync di production untuk mencegah kehilangan data.
 
-2. **Use a strong JWT secret.** Generate a secure random string (at least 32 characters) for `JWT_SECRET`. You can generate one with:
+2. **Gunakan JWT secret yang kuat.** Generate string acak yang aman (minimal 32 karakter) untuk `JWT_SECRET`. Kamu bisa generate dengan:
 
    ```bash
    node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
    ```
 
-3. **Build the frontend.** Run `npm run build` in the `frontend/` directory and serve the resulting `dist/` folder with a static file server (Nginx, Caddy, etc.).
+3. **Build frontend.** Jalankan `npm run build` di direktori `frontend/` dan serve folder `dist/` yang dihasilkan dengan static file server (Nginx, Caddy, dll.).
 
-4. **Build the backend.** Run `npm run build` in the `backend/` directory, then start with `npm run start:prod`.
+4. **Build backend.** Jalankan `npm run build` di direktori `backend/`, lalu start dengan `npm run start:prod`.
 
-5. **Configure CORS.** Update the `origin` array in `backend/src/main.ts` to include your production frontend URL instead of `localhost`.
+5. **Konfigurasi CORS.** Update array `origin` di `backend/src/main.ts` untuk menyertakan URL frontend production kamu daripada `localhost`.
 
-6. **Environment variables.** Use your hosting platform's environment variable management (not `.env` files) in production.
+6. **Environment variables.** Gunakan manajemen environment variable dari platform hosting kamu (bukan file `.env`) di production.
 
-7. **Database seeder.** The initial seeder only runs when the tables are empty, so it won't duplicate data on subsequent starts. However, you should change the default admin password after the first login.
+7. **Database seeder.** Seeder awal hanya berjalan ketika tabel kosong, jadi tidak akan menduplikasi data saat restart. Namun, kamu harus mengganti password admin default setelah login pertama.
 
 ---
 
 ## Troubleshooting
 
-### Backend won't start
+### Backend tidak mau start
 
-- **"Access denied for user 'root'"** — Check your `DB_USERNAME` and `DB_PASSWORD` in `.env`. Make sure MySQL is running and the credentials are correct.
-- **"Unknown database 'admin_panel'"** — You forgot to create the database. Run `CREATE DATABASE admin_panel;` in your MySQL client.
-- **Port already in use** — Another process is using port 3001. Either stop that process or change `PORT` in your `.env`.
+- **"Access denied for user 'root'"** — Periksa `DB_USERNAME` dan `DB_PASSWORD` di file `.env`. Pastikan MySQL berjalan dan kredensial sudah benar.
+- **"Unknown database 'admin_panel'"** — Kamu lupa membuat database. Jalankan `CREATE DATABASE admin_panel;` di MySQL client.
+- **Port sudah digunakan** — Proses lain sedang menggunakan port 3001. Hentikan proses tersebut atau ubah `PORT` di file `.env`.
 
-### Frontend can't connect to the API
+### Frontend tidak bisa terhubung ke API
 
-- Make sure the backend is running on `http://localhost:3001`.
-- Check that CORS is enabled for `http://localhost:5173` in `backend/src/main.ts`.
-- If you changed the backend port, update the base URL in `frontend/src/services/api.ts`.
+- Pastikan backend berjalan di `http://localhost:3001`.
+- Periksa bahwa CORS sudah diaktifkan untuk `http://localhost:5173` di `backend/src/main.ts`.
+- Jika kamu mengubah port backend, update base URL di `frontend/src/services/api.ts`.
 
-### Login doesn't work
+### Login tidak berfungsi
 
-- Run the backend at least once to allow the seeder to create the default admin account.
-- Make sure you're using the exact credentials: `admin@example.com` / `password123`.
-- If you've run the backend before and changed data, the seeder won't re-create the admin (it only seeds when the table is empty).
+- Jalankan backend minimal sekali untuk membiarkan seeder membuat akun admin default.
+- Pastikan kamu menggunakan kredensial yang tepat: `admin@example.com` / `password123`.
+- Jika kamu sudah menjalankan backend sebelumnya dan mengubah data, seeder tidak akan membuat ulang admin (hanya seed ketika tabel kosong).
 
-### "Cannot delete category"
+### "Tidak bisa menghapus category"
 
-This is expected behavior. A category cannot be deleted if it still has products associated with it. Delete or move all products in that category first, then try again.
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please make sure your code follows the existing style and passes linting before submitting.
+Ini adalah perilaku yang diharapkan. Category tidak bisa dihapus jika masih memiliki products yang terkait. Hapus atau pindahkan semua products di category tersebut terlebih dahulu, lalu coba lagi.
 
 ---
 
-## License
+## Kontribusi
 
-This project is unlicensed and intended for educational/challenge purposes.
+1. Fork repository
+2. Buat branch fitur kamu (`git checkout -b feature/fitur-keren`)
+3. Commit perubahan kamu (`git commit -m 'Tambah fitur keren'`)
+4. Push ke branch (`git push origin feature/fitur-keren`)
+5. Buka Pull Request
+
+Pastikan kode kamu mengikuti style yang sudah ada dan lolos linting sebelum submit.
+
+---
+
+## Lisensi
+
+Projek ini tidak berlisensi dan ditujukan untuk keperluan edukasi/challenge.
 
 ---
 
 <div align="center">
 
-**Built with** NestJS + React + TypeScript
+**Dibangun dengan** NestJS + React + TypeScript
 
 </div>
