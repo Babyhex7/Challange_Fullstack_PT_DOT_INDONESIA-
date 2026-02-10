@@ -296,11 +296,11 @@ Dokumentasi Swagger interaktif tersedia di **http://localhost:3001/api/docs** sa
 
 ### Autentikasi
 
-| Method | Endpoint                | Auth | Deskripsi                                       |
-| ------ | ----------------------- | ---- | ----------------------------------------------- |
-| POST   | `/api/v1/auth/login`    | Tidak| Login dengan email & password, mengembalikan token JWT |
-| POST   | `/api/v1/auth/register` | Tidak| Mendaftarkan akun user baru                     |
-| GET    | `/api/v1/auth/profile`  | JWT  | Mendapatkan profil user yang sedang login       |
+| Method | Endpoint                | Auth  | Deskripsi                                              |
+| ------ | ----------------------- | ----- | ------------------------------------------------------ |
+| POST   | `/api/v1/auth/login`    | Tidak | Login dengan email & password, mengembalikan token JWT |
+| POST   | `/api/v1/auth/register` | Tidak | Mendaftarkan akun user baru                            |
+| GET    | `/api/v1/auth/profile`  | JWT   | Mendapatkan profil user yang sedang login              |
 
 **Contoh Login:**
 
@@ -337,13 +337,13 @@ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
 
 ### Categories
 
-| Method | Endpoint                 | Auth | Deskripsi                        |
-| ------ | ------------------------ | ---- | -------------------------------- |
+| Method | Endpoint                 | Auth | Deskripsi                             |
+| ------ | ------------------------ | ---- | ------------------------------------- |
 | GET    | `/api/v1/categories`     | JWT  | Daftar categories (dengan pagination) |
-| GET    | `/api/v1/categories/:id` | JWT  | Detail category                  |
-| POST   | `/api/v1/categories`     | JWT  | Membuat category baru            |
-| PATCH  | `/api/v1/categories/:id` | JWT  | Mengupdate category              |
-| DELETE | `/api/v1/categories/:id` | JWT  | Menghapus category               |
+| GET    | `/api/v1/categories/:id` | JWT  | Detail category                       |
+| POST   | `/api/v1/categories`     | JWT  | Membuat category baru                 |
+| PATCH  | `/api/v1/categories/:id` | JWT  | Mengupdate category                   |
+| DELETE | `/api/v1/categories/:id` | JWT  | Menghapus category                    |
 
 **Contoh Membuat Category:**
 
@@ -356,13 +356,13 @@ curl -X POST http://localhost:3001/api/v1/categories \
 
 ### Products
 
-| Method | Endpoint               | Auth | Deskripsi                         |
-| ------ | ---------------------- | ---- | --------------------------------- |
+| Method | Endpoint               | Auth | Deskripsi                           |
+| ------ | ---------------------- | ---- | ----------------------------------- |
 | GET    | `/api/v1/products`     | JWT  | Daftar products (dengan pagination) |
-| GET    | `/api/v1/products/:id` | JWT  | Detail product                    |
-| POST   | `/api/v1/products`     | JWT  | Membuat product baru              |
-| PATCH  | `/api/v1/products/:id` | JWT  | Mengupdate product                |
-| DELETE | `/api/v1/products/:id` | JWT  | Menghapus product                 |
+| GET    | `/api/v1/products/:id` | JWT  | Detail product                      |
+| POST   | `/api/v1/products`     | JWT  | Membuat product baru                |
+| PATCH  | `/api/v1/products/:id` | JWT  | Mengupdate product                  |
+| DELETE | `/api/v1/products/:id` | JWT  | Menghapus product                   |
 
 **Contoh Membuat Product:**
 
@@ -383,11 +383,11 @@ curl -X POST http://localhost:3001/api/v1/products \
 
 Untuk semua endpoint list (`GET /categories`, `GET /products`):
 
-| Parameter    | Tipe   | Default | Deskripsi                                    |
-| ------------ | ------ | ------- | -------------------------------------------- |
-| `page`       | number | 1       | Nomor halaman untuk pagination               |
-| `limit`      | number | 10      | Jumlah item per halaman                      |
-| `search`     | string | —       | Kata kunci pencarian (filter berdasarkan nama) |
+| Parameter    | Tipe   | Default | Deskripsi                                                |
+| ------------ | ------ | ------- | -------------------------------------------------------- |
+| `page`       | number | 1       | Nomor halaman untuk pagination                           |
+| `limit`      | number | 10      | Jumlah item per halaman                                  |
+| `search`     | string | —       | Kata kunci pencarian (filter berdasarkan nama)           |
 | `categoryId` | number | —       | Filter products berdasarkan category (hanya di products) |
 
 **Contoh:**
@@ -522,21 +522,21 @@ Aplikasi menerapkan penanganan error berlapis di kedua sisi:
 
 ### Layer Error Backend
 
-| Layer                       | Fungsi                                                                                        |
-| --------------------------- | --------------------------------------------------------------------------------------------- |
-| **Global Exception Filter** | Menangkap semua exception yang tidak tertangani dan memformatnya menjadi response JSON standar |
-| **ValidationPipe**          | Validasi otomatis DTO yang masuk menggunakan decorator `class-validator`                      |
+| Layer                       | Fungsi                                                                                          |
+| --------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Global Exception Filter** | Menangkap semua exception yang tidak tertangani dan memformatnya menjadi response JSON standar  |
+| **ValidationPipe**          | Validasi otomatis DTO yang masuk menggunakan decorator `class-validator`                        |
 | **Service Layer**           | Melempar exception spesifik (`NotFoundException`, `ConflictException`, `UnauthorizedException`) |
-| **Database Error Handler**  | Menangkap error spesifik Sequelize (unique constraint, foreign key, koneksi)                  |
+| **Database Error Handler**  | Menangkap error spesifik Sequelize (unique constraint, foreign key, koneksi)                    |
 
 ### Layer Error Frontend
 
-| Layer                   | Fungsi                                                                          |
-| ----------------------- | ------------------------------------------------------------------------------- |
-| **Error Boundary**      | Komponen React yang menangkap crash render dan menampilkan fallback UI          |
-| **Axios Interceptor**   | Otomatis redirect ke halaman login saat menerima response 401 (Unauthorized)    |
+| Layer                   | Fungsi                                                                           |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| **Error Boundary**      | Komponen React yang menangkap crash render dan menampilkan fallback UI           |
+| **Axios Interceptor**   | Otomatis redirect ke halaman login saat menerima response 401 (Unauthorized)     |
 | **`getErrorMessage()`** | Fungsi utilitas yang mengekstrak pesan error yang mudah dibaca dari response API |
-| **Toast Notifications** | Memberikan feedback visual langsung untuk setiap aksi user                      |
+| **Toast Notifications** | Memberikan feedback visual langsung untuk setiap aksi user                       |
 | **Form Validation**     | Validasi client-side menggunakan schema Zod mencegah submission yang tidak valid |
 
 ---
@@ -545,36 +545,36 @@ Aplikasi menerapkan penanganan error berlapis di kedua sisi:
 
 ### Dependencies Backend
 
-| Package                | Kegunaan                                              |
-| ---------------------- | ----------------------------------------------------- |
-| `@nestjs/core`         | Framework utama NestJS                                |
-| `@nestjs/config`       | Manajemen environment variable via file `.env`        |
-| `@nestjs/jwt`          | Generate dan verifikasi token JWT                     |
-| `@nestjs/passport`     | Integrasi Passport.js untuk strategi autentikasi      |
-| `@nestjs/sequelize`    | Integrasi Sequelize ORM dengan NestJS                 |
-| `@nestjs/swagger`      | Dokumentasi Swagger/OpenAPI otomatis                  |
-| `sequelize`            | SQL ORM untuk query MySQL                             |
-| `sequelize-typescript` | Decorator TypeScript untuk model Sequelize            |
-| `mysql2`               | Driver database MySQL                                 |
-| `bcrypt`               | Hashing password yang aman                            |
-| `class-validator`      | Decorator validasi DTO                                |
-| `class-transformer`    | Transformasi tipe otomatis untuk DTO                  |
-| `passport-jwt`         | Strategi ekstraksi dan verifikasi JWT                 |
+| Package                | Kegunaan                                         |
+| ---------------------- | ------------------------------------------------ |
+| `@nestjs/core`         | Framework utama NestJS                           |
+| `@nestjs/config`       | Manajemen environment variable via file `.env`   |
+| `@nestjs/jwt`          | Generate dan verifikasi token JWT                |
+| `@nestjs/passport`     | Integrasi Passport.js untuk strategi autentikasi |
+| `@nestjs/sequelize`    | Integrasi Sequelize ORM dengan NestJS            |
+| `@nestjs/swagger`      | Dokumentasi Swagger/OpenAPI otomatis             |
+| `sequelize`            | SQL ORM untuk query MySQL                        |
+| `sequelize-typescript` | Decorator TypeScript untuk model Sequelize       |
+| `mysql2`               | Driver database MySQL                            |
+| `bcrypt`               | Hashing password yang aman                       |
+| `class-validator`      | Decorator validasi DTO                           |
+| `class-transformer`    | Transformasi tipe otomatis untuk DTO             |
+| `passport-jwt`         | Strategi ekstraksi dan verifikasi JWT            |
 
 ### Dependencies Frontend
 
-| Package               | Kegunaan                                         |
-| --------------------- | ------------------------------------------------ |
-| `react` (v19)         | Library UI                                       |
-| `react-router-dom`    | Routing dan navigasi client-side                 |
-| `axios`               | HTTP client untuk komunikasi API                 |
-| `zustand`             | State management global yang ringan              |
+| Package               | Kegunaan                                                 |
+| --------------------- | -------------------------------------------------------- |
+| `react` (v19)         | Library UI                                               |
+| `react-router-dom`    | Routing dan navigasi client-side                         |
+| `axios`               | HTTP client untuk komunikasi API                         |
+| `zustand`             | State management global yang ringan                      |
 | `react-hook-form`     | Penanganan form yang performant dengan re-render minimal |
-| `zod`                 | Validasi schema TypeScript-first                 |
-| `@hookform/resolvers` | Menghubungkan schema Zod ke React Hook Form      |
-| `tailwindcss` (v4)    | CSS framework utility-first                      |
-| `lucide-react`        | Library ikon modern (berbasis Feather)           |
-| `react-hot-toast`     | Notifikasi toast yang ringan                     |
+| `zod`                 | Validasi schema TypeScript-first                         |
+| `@hookform/resolvers` | Menghubungkan schema Zod ke React Hook Form              |
+| `tailwindcss` (v4)    | CSS framework utility-first                              |
+| `lucide-react`        | Library ikon modern (berbasis Feather)                   |
+| `react-hot-toast`     | Notifikasi toast yang ringan                             |
 
 ---
 
@@ -582,16 +582,16 @@ Aplikasi menerapkan penanganan error berlapis di kedua sisi:
 
 Buat file `.env` di direktori `backend/`:
 
-| Variable         | Wajib | Default       | Deskripsi                           |
-| ---------------- | ----- | ------------- | ----------------------------------- |
-| `DB_HOST`        | Ya    | `localhost`   | Hostname server MySQL               |
-| `DB_PORT`        | Ya    | `3306`        | Port server MySQL                   |
-| `DB_USERNAME`    | Ya    | `root`        | Username MySQL                      |
-| `DB_PASSWORD`    | Ya    | —             | Password MySQL                      |
-| `DB_NAME`        | Ya    | `admin_panel` | Nama database MySQL                 |
-| `JWT_SECRET`     | Ya    | —             | Secret key untuk signing token JWT  |
+| Variable         | Wajib | Default       | Deskripsi                                   |
+| ---------------- | ----- | ------------- | ------------------------------------------- |
+| `DB_HOST`        | Ya    | `localhost`   | Hostname server MySQL                       |
+| `DB_PORT`        | Ya    | `3306`        | Port server MySQL                           |
+| `DB_USERNAME`    | Ya    | `root`        | Username MySQL                              |
+| `DB_PASSWORD`    | Ya    | —             | Password MySQL                              |
+| `DB_NAME`        | Ya    | `admin_panel` | Nama database MySQL                         |
+| `JWT_SECRET`     | Ya    | —             | Secret key untuk signing token JWT          |
 | `JWT_EXPIRES_IN` | Tidak | `24h`         | Waktu kadaluarsa token (contoh: `1h`, `7d`) |
-| `PORT`           | Tidak | `3001`        | Port server backend                 |
+| `PORT`           | Tidak | `3001`        | Port server backend                         |
 
 ---
 
@@ -613,12 +613,12 @@ Buat file `.env` di direktori `backend/`:
 
 ### Frontend (`cd frontend`)
 
-| Command           | Deskripsi                                  |
-| ----------------- | ------------------------------------------ |
+| Command           | Deskripsi                                   |
+| ----------------- | ------------------------------------------- |
 | `npm run dev`     | Jalankan Vite development server dengan HMR |
-| `npm run build`   | Type-check dan build untuk production      |
-| `npm run preview` | Preview build production secara lokal      |
-| `npm run lint`    | Jalankan ESLint                            |
+| `npm run build`   | Type-check dan build untuk production       |
+| `npm run preview` | Preview build production secara lokal       |
+| `npm run lint`    | Jalankan ESLint                             |
 
 ---
 
