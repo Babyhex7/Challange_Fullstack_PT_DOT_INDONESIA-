@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 export default function MainLayout() {
   return (
-    <div className="flex min-h-screen bg-gray-50/50">
+    <div className="flex min-h-screen bg-gray-100/70">
       {/* Sidebar kiri (fixed) */}
       <Sidebar />
 

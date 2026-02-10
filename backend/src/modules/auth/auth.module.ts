@@ -12,7 +12,7 @@ import { UsersModule } from '../users/users.module';
   imports: [
     UsersModule, // import UsersModule untuk akses UsersService
     PassportModule,
-    // Gunakan registerAsync agar .env terbaca dulu
+    //  registerAsync agar .env terbaca dulu
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

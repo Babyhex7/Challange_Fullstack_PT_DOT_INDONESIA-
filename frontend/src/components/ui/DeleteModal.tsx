@@ -21,15 +21,15 @@ export default function DeleteModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl p-7 w-full max-w-sm mx-4 shadow-2xl animate-slideUp">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white rounded-3xl p-7 w-full max-w-sm mx-4 shadow-2xl animate-slideUp border border-gray-200/60">
         {/* Icon warning */}
         <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
           <AlertTriangle size={28} className="text-red-500" />
         </div>
 
         <h3 className="text-lg font-bold text-gray-900 text-center">{title}</h3>
-        <p className="text-sm text-gray-400 mt-2 text-center leading-relaxed">
+        <p className="text-sm text-gray-500 mt-2 text-center leading-relaxed">
           {message}
         </p>
 

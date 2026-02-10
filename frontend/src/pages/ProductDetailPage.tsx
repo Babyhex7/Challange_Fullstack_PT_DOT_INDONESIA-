@@ -65,7 +65,7 @@ export default function ProductDetailPage() {
       <>
         <Header title="Detail Product" subtitle="Memuat data..." />
         <div className="p-8">
-          <div className="bg-white rounded-2xl border border-gray-100 p-8">
+          <div className="bg-white rounded-2xl border border-gray-200/60 p-8 shadow-sm">
             <div className="animate-pulse space-y-4">
               <div className="skeleton w-48 h-6" />
               <div className="skeleton w-96 h-4" />
@@ -82,12 +82,12 @@ export default function ProductDetailPage() {
       <>
         <Header title="Detail Product" subtitle="Data tidak ditemukan" />
         <div className="p-8">
-          <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <div className="bg-white rounded-2xl border border-gray-200/60 p-12 text-center shadow-sm">
             <AlertCircle size={48} className="mx-auto mb-4 text-red-300" />
             <h3 className="text-lg font-bold text-gray-900 mb-2">
               Product Tidak Ditemukan
             </h3>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-gray-500 text-sm mb-6">
               {error || "Data yang Anda cari tidak tersedia."}
             </p>
             <button
@@ -113,7 +113,7 @@ export default function ProductDetailPage() {
         {/* Tombol kembali */}
         <button
           onClick={() => navigate("/products")}
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-6 transition-colors"
         >
           <ArrowLeft size={16} />
           Kembali ke daftar product
@@ -121,7 +121,7 @@ export default function ProductDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Info Utama Product */}
-          <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+          <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200/60 p-7 shadow-sm">
             <div className="flex items-start gap-5">
               <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center shrink-0">
                 <Package size={24} className="text-emerald-500" />
@@ -163,14 +163,14 @@ export default function ProductDetailPage() {
                   <h4 className="text-sm font-semibold text-gray-600 mb-2">
                     Deskripsi
                   </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-gray-500 text-sm leading-relaxed">
                     {product.description ||
                       "Tidak ada deskripsi untuk product ini."}
                   </p>
                 </div>
 
                 {/* Timestamps */}
-                <div className="flex flex-wrap gap-4 mt-5 text-xs text-gray-400">
+                <div className="flex flex-wrap gap-4 mt-5 text-xs text-gray-500">
                   <div className="flex items-center gap-1.5">
                     <Calendar size={14} />
                     <span>Dibuat: {formatDate(product.createdAt)}</span>
@@ -187,12 +187,12 @@ export default function ProductDetailPage() {
           {/* Sidebar - Harga & Stock */}
           <div className="space-y-5">
             {/* Card Harga */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-200/60 p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
                   <DollarSign size={18} className="text-emerald-500" />
                 </div>
-                <p className="text-sm font-semibold text-gray-400">Harga</p>
+                <p className="text-sm font-semibold text-gray-500">Harga</p>
               </div>
               <p className="text-2xl font-extrabold text-emerald-600 tracking-tight">
                 {formatPrice(product.price)}
@@ -200,12 +200,12 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Card Stock */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-200/60 p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
                   <Box size={18} className="text-blue-500" />
                 </div>
-                <p className="text-sm font-semibold text-gray-400">Stock</p>
+                <p className="text-sm font-semibold text-gray-500">Stock</p>
               </div>
               <p className="text-2xl font-extrabold text-gray-900 tracking-tight">
                 {product.stock}
@@ -222,12 +222,12 @@ export default function ProductDetailPage() {
 
             {/* Card Category */}
             {product.category && (
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <div className="bg-white rounded-2xl border border-gray-200/60 p-6 shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
                     <FolderTree size={18} className="text-indigo-500" />
                   </div>
-                  <p className="text-sm font-semibold text-gray-400">
+                  <p className="text-sm font-semibold text-gray-500">
                     Category
                   </p>
                 </div>

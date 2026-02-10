@@ -27,19 +27,19 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center"
+        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center shadow-sm"
       >
-        <ChevronLeft size={16} className="text-gray-500" />
+        <ChevronLeft size={16} className="text-gray-600" />
       </button>
 
       {getPages().map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`w-9 h-9 rounded-xl text-sm font-medium transition-all ${
+          className={`w-9 h-9 rounded-xl text-sm font-medium transition-all shadow-sm ${
             page === currentPage
               ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20"
-              : "border border-gray-200 text-gray-500 hover:bg-gray-50"
+              : "border border-gray-200 text-gray-600 hover:bg-gray-50"
           }`}
         >
           {page}
@@ -49,9 +49,9 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center"
+        className="w-9 h-9 rounded-xl border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-all flex items-center justify-center shadow-sm"
       >
-        <ChevronRight size={16} className="text-gray-500" />
+        <ChevronRight size={16} className="text-gray-600" />
       </button>
     </div>
   );

@@ -104,7 +104,7 @@ export default function CategoryDetailPage() {
       <>
         <Header title="Detail Category" subtitle="Memuat data..." />
         <div className="p-8">
-          <div className="bg-white rounded-2xl border border-gray-100 p-8">
+          <div className="bg-white rounded-2xl border border-gray-200/60 p-8">
             <div className="animate-pulse space-y-4">
               <div className="skeleton w-48 h-6" />
               <div className="skeleton w-96 h-4" />
@@ -121,12 +121,12 @@ export default function CategoryDetailPage() {
       <>
         <Header title="Detail Category" subtitle="Data tidak ditemukan" />
         <div className="p-8">
-          <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <div className="bg-white rounded-2xl border border-gray-200/60 p-12 text-center shadow-sm">
             <AlertCircle size={48} className="mx-auto mb-4 text-red-300" />
             <h3 className="text-lg font-bold text-gray-900 mb-2">
               Category Tidak Ditemukan
             </h3>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-gray-500 text-sm mb-6">
               {error || "Data yang Anda cari tidak tersedia."}
             </p>
             <button
@@ -152,14 +152,14 @@ export default function CategoryDetailPage() {
         {/* Tombol kembali */}
         <button
           onClick={() => navigate("/categories")}
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-6 transition-colors"
         >
           <ArrowLeft size={16} />
           Kembali ke daftar category
         </button>
 
         {/* Info Category */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-7 mb-6 shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-200/60 p-7 mb-6 shadow-sm">
           <div className="flex items-start gap-5">
             <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
               <FolderTree size={24} className="text-blue-500" />
@@ -168,10 +168,10 @@ export default function CategoryDetailPage() {
               <h3 className="text-xl font-bold text-gray-900">
                 {category.name}
               </h3>
-              <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+              <p className="text-gray-500 text-sm mt-1 leading-relaxed">
                 {category.description || "Tidak ada deskripsi"}
               </p>
-              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs text-gray-400">
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs text-gray-500">
                 <div className="flex items-center gap-1.5">
                   <Package size={14} />
                   <span>
@@ -202,45 +202,45 @@ export default function CategoryDetailPage() {
         </div>
 
         {/* Daftar Products dalam category ini */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="px-7 py-5 border-b border-gray-100 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm">
+          <div className="px-7 py-5 border-b border-gray-200/60 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <h4 className="text-base font-bold text-gray-900">
               Products di Category Ini
             </h4>
             <div className="relative w-full sm:w-72">
               <Search
                 size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
               <input
                 type="text"
                 placeholder="Cari product..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 text-sm rounded-2xl border-2 border-gray-100 bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 outline-none transition-all placeholder:text-gray-300"
+                className="w-full pl-11 pr-4 py-2.5 text-sm rounded-2xl border-2 border-gray-200 bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 outline-none transition-all placeholder:text-gray-400 shadow-sm"
               />
             </div>
           </div>
 
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider w-12">
+              <tr className="border-b border-gray-200/60 bg-gray-50/50">
+                <th className="text-left py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider w-12">
                   #
                 </th>
-                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider">
+                <th className="text-left py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider">
                   Nama Product
                 </th>
-                <th className="text-right py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider">
+                <th className="text-right py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider">
                   Harga
                 </th>
-                <th className="text-center py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider">
+                <th className="text-center py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider">
                   Stock
                 </th>
-                <th className="text-left py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider hidden lg:table-cell">
+                <th className="text-left py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider hidden lg:table-cell">
                   Deskripsi
                 </th>
-                <th className="text-center py-4 px-5 font-semibold text-gray-400 text-xs uppercase tracking-wider w-28">
+                <th className="text-center py-4 px-5 font-semibold text-gray-500 text-xs uppercase tracking-wider w-28">
                   Detail
                 </th>
               </tr>
@@ -287,7 +287,7 @@ export default function CategoryDetailPage() {
                     key={prod.id}
                     className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors"
                   >
-                    <td className="py-4 px-5 text-gray-300 text-xs font-medium">
+                    <td className="py-4 px-5 text-gray-400 text-xs font-medium">
                       {(page - 1) * 10 + idx + 1}
                     </td>
                     <td className="py-4 px-5 font-semibold text-gray-800">
@@ -301,9 +301,9 @@ export default function CategoryDetailPage() {
                         {prod.stock}
                       </span>
                     </td>
-                    <td className="py-4 px-5 text-gray-400 truncate max-w-xs hidden lg:table-cell">
+                    <td className="py-4 px-5 text-gray-500 truncate max-w-xs hidden lg:table-cell">
                       {prod.description || (
-                        <span className="text-gray-200">-</span>
+                        <span className="text-gray-300">-</span>
                       )}
                     </td>
                     <td className="py-4 px-5 text-center">
@@ -322,10 +322,10 @@ export default function CategoryDetailPage() {
 
           {/* Pagination */}
           {meta.totalPages > 1 && (
-            <div className="px-7 py-4 border-t border-gray-100 flex items-center justify-between">
-              <p className="text-sm text-gray-400">
+            <div className="px-7 py-4 border-t border-gray-200/60 flex items-center justify-between">
+              <p className="text-sm text-gray-500">
                 Total:{" "}
-                <span className="font-semibold text-gray-600">
+                <span className="font-semibold text-gray-700">
                   {meta.totalItems}
                 </span>{" "}
                 products

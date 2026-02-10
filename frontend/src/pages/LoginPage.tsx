@@ -124,7 +124,7 @@ export default function LoginPage() {
       </div>
 
       {/* ========== KANAN - Form Login ========== */}
-      <div className="w-full lg:w-1/2 xl:w-[45%] flex items-center justify-center p-6 sm:p-10 bg-gray-50/80">
+      <div className="w-full lg:w-1/2 xl:w-[45%] flex items-center justify-center p-6 sm:p-10 bg-gray-100/80">
         <div className="w-full max-w-md animate-fadeIn">
           {/* Mobile logo - hanya tampil di mobile */}
           <div className="lg:hidden mb-10">
@@ -137,7 +137,7 @@ export default function LoginPage() {
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
               Selamat datang!
             </h2>
-            <p className="text-gray-400 mt-2 text-sm">
+            <p className="text-gray-500 mt-2 text-sm">
               Masukkan kredensial untuk mengakses dashboard
             </p>
           </div>
@@ -236,20 +236,20 @@ export default function LoginPage() {
           </form>
 
           {/* Demo credentials */}
-          <div className="mt-8 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+          <div className="mt-8 bg-white rounded-2xl p-5 border border-gray-200/60 shadow-sm">
             <p className="font-semibold text-gray-700 text-sm mb-2">
               🔑 Demo Credentials
             </p>
             <div className="space-y-1.5 text-sm">
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">Email</span>
-                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-600 border border-gray-100">
+                <span className="text-gray-500">Email</span>
+                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-700 border border-gray-200/60">
                   admin@example.com
                 </code>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">Password</span>
-                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-600 border border-gray-100">
+                <span className="text-gray-500">Password</span>
+                <code className="bg-gray-50 px-3 py-1 rounded-lg text-xs font-mono text-gray-700 border border-gray-200/60">
                   password123
                 </code>
               </div>
