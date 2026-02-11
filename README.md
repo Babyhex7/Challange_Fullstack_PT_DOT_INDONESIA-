@@ -489,37 +489,6 @@ Pola-pola utama yang digunakan:
 
 Aplikasi menggunakan tiga tabel dengan relasi berikut:
 
-```
-┌──────────────────────┐         ┌──────────────────────────┐
-│     categories       │         │        products           │
-├──────────────────────┤         ├──────────────────────────┤
-│ id          INT (PK) │────┐    │ id            INT (PK)   │
-│ name        VARCHAR  │    │    │ category_id   INT (FK)   │◄──┐
-│ description TEXT     │    │    │ name          VARCHAR    │   │
-│ is_active   BOOLEAN  │    │    │ description   TEXT       │   │
-│ created_at  DATETIME │    │    │ price         DECIMAL    │   │
-│ updated_at  DATETIME │    │    │ stock         INT        │   │
-└──────────────────────┘    │    │ is_active     BOOLEAN    │   │
-                            │    │ created_at    DATETIME   │   │
-                            │    │ updated_at    DATETIME   │   │
-                            │    └──────────────────────────┘   │
-                            │                                    │
-                            └──────── One to Many ───────────────┘
-
-┌──────────────────────┐
-│       users          │
-├──────────────────────┤
-│ id          INT (PK) │
-│ email       VARCHAR  │  (unique)
-│ password    VARCHAR  │  (bcrypt hashed)
-│ name        VARCHAR  │
-│ role        VARCHAR  │  (default: 'admin')
-│ is_active   BOOLEAN  │
-│ created_at  DATETIME │
-│ updated_at  DATETIME │
-└──────────────────────┘
-```
-
 **Relasi:**
 
 - `categories` → `products` : **One-to-Many** (1 category memiliki banyak products, 1 product hanya milik 1 category)
